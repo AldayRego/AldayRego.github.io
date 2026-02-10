@@ -4,572 +4,831 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AldayRego | Rafael & Iker</title>
-  <meta name="description" content="Two-person founder portfolio: Rafael Lima Araujo Rego and Iker Alday Bonilla." />
+  <meta name="description" content="Founder portfolios for Rafael Lima Araujo Rego and Iker Alday Bonilla." />
 
   <style>
     :root {
-      --bg: #0b0f19;
-      --panel: rgba(255,255,255,0.06);
-      --panel-2: rgba(255,255,255,0.10);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.68);
-      --muted-2: rgba(255,255,255,0.52);
-      --border: rgba(255,255,255,0.12);
-      --shadow: 0 14px 40px rgba(0,0,0,0.45);
+      --bg: #ffffff;
+      --text: #0b1220;
+      --muted: #516079;
+      --muted2: #6b7a92;
+      --border: rgba(16, 24, 40, 0.12);
+      --card: #ffffff;
+      --soft: #f6f8fb;
+      --shadow: 0 18px 50px rgba(16, 24, 40, 0.10);
+      --shadow2: 0 10px 30px rgba(16, 24, 40, 0.08);
       --radius: 18px;
-      --maxw: 980px;
-      --accent: #7c5cff;
-      --accent-2: #2dd4bf;
-      --focus: rgba(124, 92, 255, 0.55);
+      --radius2: 14px;
+      --maxw: 1080px;
+      --accent: #1f6feb; /* clean blue */
+      --accent2: #0ea5e9;
     }
 
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,92,255,0.25), transparent 55%),
-                  radial-gradient(900px 650px at 85% 25%, rgba(45,212,191,0.18), transparent 55%),
-                  radial-gradient(1000px 700px at 45% 95%, rgba(124,92,255,0.10), transparent 55%),
-                  var(--bg);
+      background: var(--bg);
       color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       line-height: 1.45;
     }
 
-    a { color: inherit; }
+    a { color: inherit; text-decoration: none; }
     a:hover { opacity: 0.92; }
 
     .wrap {
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 32px 18px 64px;
+      padding: 28px 18px 80px;
     }
 
-    header {
-      display: grid;
-      gap: 14px;
-      padding: 18px 18px 10px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    /* Top bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .topline {
+    .topbar-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 12px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 14px;
     }
 
     .brand {
       display: flex;
+      align-items: center;
       gap: 10px;
-      align-items: baseline;
-      flex-wrap: wrap;
+      min-width: 220px;
     }
-    .brand h1 {
-      font-size: 18px;
-      margin: 0;
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(31,111,235,0.18), rgba(14,165,233,0.16));
+      border: 1px solid rgba(31,111,235,0.25);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .brand-title {
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand-title strong {
+      font-size: 14px;
       letter-spacing: 0.2px;
     }
-    .brand .tag {
-      font-size: 13px;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.22);
-    }
-
-    .hint {
-      font-size: 13px;
+    .brand-title span {
+      font-size: 12px;
       color: var(--muted);
     }
 
-    .tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .tabbtn {
-      appearance: none;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,0.22);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
-      font-size: 14px;
-      display: inline-flex;
+    .nav {
+      display: none;
       gap: 10px;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
-    .tabbtn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.20); }
-    .tabbtn:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
-    .tabbtn[aria-selected="true"] {
-      background: linear-gradient(180deg, rgba(124,92,255,0.22), rgba(124,92,255,0.10));
-      border-color: rgba(124,92,255,0.40);
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
+    .nav a {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 7px 10px;
       border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 6px rgba(124,92,255,0.15);
+      border: 1px solid transparent;
     }
-    .dot.alt {
-      background: var(--accent-2);
-      box-shadow: 0 0 0 6px rgba(45,212,191,0.15);
+    .nav a:hover {
+      color: var(--text);
+      border-color: var(--border);
+      background: #fff;
+    }
+    .nav a.active {
+      color: var(--text);
+      border-color: rgba(31,111,235,0.25);
+      background: rgba(31,111,235,0.06);
     }
 
-    main {
-      margin-top: 16px;
-      display: grid;
-      gap: 16px;
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .panel {
+    .btn {
+      appearance: none;
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
+      background: #fff;
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      box-shadow: 0 1px 0 rgba(16,24,40,0.04);
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow2);
+      border-color: rgba(31,111,235,0.25);
+    }
+    .btn.primary {
+      border-color: rgba(31,111,235,0.30);
+      background: linear-gradient(180deg, rgba(31,111,235,0.10), rgba(31,111,235,0.05));
+      color: var(--text);
+    }
+    .btn.link {
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      color: var(--muted);
+      padding: 8px 8px;
+    }
+    .btn.link:hover { color: var(--text); }
+
+    /* Landing */
+    .hero {
+      padding: 44px 0 20px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .brand { min-width: unset; }
+    }
+
+    .headline {
+      font-size: 34px;
+      line-height: 1.05;
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+    .subhead {
+      margin: 12px 0 0;
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .select-card {
+      border: 1px solid var(--border);
+      background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 18px;
     }
 
-    .cv {
-      display: none;
-      animation: fadeIn 160ms ease-out;
-    }
-    .cv.active { display: block; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
+    .select-title {
+      font-size: 13px;
+      color: var(--muted2);
+      margin: 0 0 10px;
     }
 
-    .cv-header {
-      display: grid;
-      gap: 8px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 14px;
-    }
-
-    .name {
-      font-size: 22px;
-      margin: 0;
-      letter-spacing: 0.2px;
-    }
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .grid {
+    .person-grid {
       display: grid;
       gap: 12px;
-      grid-template-columns: 1.15fr 0.85fr;
     }
 
-    @media (max-width: 860px) {
-      .grid { grid-template-columns: 1fr; }
+    .person-btn {
+      display: grid;
+      gap: 6px;
+      text-align: left;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    }
+    .person-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow2);
+      border-color: rgba(31,111,235,0.25);
+    }
+    .person-btn strong {
+      font-size: 15px;
+      letter-spacing: 0.1px;
+    }
+    .person-btn span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted2);
+    }
+
+    /* Profile page */
+    .profile {
+      display: none;
+      padding-top: 18px;
+    }
+    .profile.active { display: block; }
+
+    .profile-hero {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(31,111,235,0.06), rgba(255,255,255,0.98));
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-top: 14px;
+    }
+
+    .profile-hero h2 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -0.3px;
+    }
+
+    .profile-hero p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      max-width: 72ch;
+      font-size: 15px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .chip {
+      font-size: 12px;
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .sections {
+      margin-top: 16px;
+      display: grid;
+      gap: 14px;
     }
 
     .section {
       border: 1px solid var(--border);
-      background: rgba(0,0,0,0.20);
-      border-radius: 14px;
-      padding: 14px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      padding: 18px;
     }
 
     .section h3 {
-      margin: 0 0 8px 0;
+      margin: 0;
       font-size: 14px;
       letter-spacing: 0.2px;
-      color: rgba(255,255,255,0.88);
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
-
-    .badge {
-      font-size: 11px;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .section p {
-      margin: 0;
+    .section .desc {
+      margin: 10px 0 0;
       color: var(--muted);
       font-size: 14px;
+      max-width: 80ch;
     }
 
-    ul {
-      margin: 8px 0 0 18px;
+    .cards {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      grid-column: span 6;
+      border: 1px solid var(--border);
+      border-radius: var(--radius2);
+      padding: 14px;
+      background: var(--soft);
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    }
+    .card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow2);
+      border-color: rgba(31,111,235,0.25);
+      background: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .card { grid-column: span 12; }
+      .headline { font-size: 30px; }
+    }
+
+    .card-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .card-title strong {
+      font-size: 14px;
+    }
+    .card-title span {
+      font-size: 12px;
+      color: var(--muted2);
+    }
+    .card p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .card ul {
+      margin: 10px 0 0 18px;
       padding: 0;
       color: var(--muted);
-      font-size: 14px;
-    }
-    li { margin: 6px 0; }
-
-    .item {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(255,255,255,0.14);
-    }
-    .item:first-child {
-      margin-top: 0;
-      padding-top: 0;
-      border-top: none;
-    }
-
-    .item-title {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      font-size: 14px;
-      color: rgba(255,255,255,0.90);
-      margin: 0;
-    }
-    .item-meta {
-      color: var(--muted-2);
       font-size: 13px;
-      margin-top: 4px;
     }
+    .card li { margin: 6px 0; }
 
-    .links {
+    .card-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 8px;
+      margin-top: 12px;
     }
+
     .pill {
-      text-decoration: none;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       padding: 8px 10px;
       border-radius: 999px;
-      font-size: 13px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 12px;
       color: var(--text);
     }
-    .pill:hover { border-color: rgba(255,255,255,0.22); }
+    .pill:hover { border-color: rgba(31,111,235,0.25); }
 
-    footer {
+    .mutedline {
       margin-top: 12px;
-      text-align: center;
-      color: var(--muted-2);
       font-size: 12px;
+      color: var(--muted2);
     }
 
-    /* Editable helper: makes it obvious where to change things */
-    .edit-hint {
-      color: var(--muted-2);
+    /* simple "page mode" */
+    .mode-home .nav { display: none; }
+    .mode-profile .nav { display: flex; }
+
+    /* anchor spacing for sticky header */
+    .anchor {
+      scroll-margin-top: 74px;
+    }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      color: var(--muted2);
       font-size: 12px;
-      margin-top: 10px;
+      text-align: center;
     }
   </style>
 </head>
 
-<body>
+<body class="mode-home">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo">AR</div>
+        <div class="brand-title">
+          <strong>AldayRego</strong>
+          <span>Two founders, selected work</span>
+        </div>
+      </div>
+
+      <nav class="nav" id="nav">
+        <a href="#overview" data-spy="overview">Overview</a>
+        <a href="#projects" data-spy="projects">Projects</a>
+        <a href="#proof" data-spy="proof">Proof</a>
+        <a href="#contact" data-spy="contact">Contact</a>
+      </nav>
+
+      <div class="top-actions">
+        <button class="btn link" id="backBtn" type="button" style="display:none;">Back</button>
+        <button class="btn primary" id="copyLinkBtn" type="button" style="display:none;">Copy link</button>
+      </div>
+    </div>
+  </div>
+
   <div class="wrap">
-    <header>
-      <div class="topline">
-        <div class="brand">
-          <h1>AldayRego</h1>
-          <span class="tag">Two-person portfolio</span>
+    <!-- HOME -->
+    <section class="hero" id="home">
+      <div class="hero-grid">
+        <div>
+          <h1 class="headline">Two founders. Clear proof. Easy to skim.</h1>
+          <p class="subhead">
+            We keep public artifacts minimal and high-signal. Some work is under NDA; summaries are sanitized.
+            Pick a profile to view selected projects and links.
+          </p>
         </div>
-        <div class="hint">Click a name to view the CV. Share this link in EF.</div>
+
+        <div class="select-card">
+          <p class="select-title">Select a profile</p>
+
+          <div class="person-grid">
+            <button class="person-btn" type="button" data-person="rafael">
+              <strong>Rafael Lima Araujo Rego</strong>
+              <span>Quant and ML. Research and systems.</span>
+            </button>
+
+            <button class="person-btn" type="button" data-person="iker">
+              <strong>Iker Alday Bonilla</strong>
+              <span>Engineering and product. Execution heavy.</span>
+            </button>
+          </div>
+
+          <div class="note">
+            Tip: You can share direct links like <span style="color:var(--text);">.../#rafael</span> or <span style="color:var(--text);">.../#iker</span>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="profile" id="profile">
+      <div class="profile-hero">
+        <h2 id="pName">Name</h2>
+        <p id="pTagline">Tagline</p>
+        <div class="chips" id="pChips"></div>
+        <div class="chips" id="pLinks" style="margin-top:12px;"></div>
       </div>
 
-      <div class="tabs" role="tablist" aria-label="Select profile">
-        <button class="tabbtn" id="tab-rafael" role="tab" aria-selected="true" aria-controls="cv-rafael" data-target="rafael">
-          <span class="dot" aria-hidden="true"></span>
-          Rafael Lima Araujo Rego
-        </button>
-        <button class="tabbtn" id="tab-iker" role="tab" aria-selected="false" aria-controls="cv-iker" data-target="iker">
-          <span class="dot alt" aria-hidden="true"></span>
-          Iker Alday Bonilla
-        </button>
+      <div class="sections">
+        <div class="section anchor" id="overview" data-section="overview">
+          <h3>Overview</h3>
+          <p class="desc" id="pOverview"></p>
+        </div>
+
+        <div class="section anchor" id="projects" data-section="projects">
+          <h3>Selected Projects</h3>
+          <p class="desc" id="pProjectsIntro"></p>
+          <div class="cards" id="pProjectCards"></div>
+          <div class="mutedline" id="pNdaNote"></div>
+        </div>
+
+        <div class="section anchor" id="proof" data-section="proof">
+          <h3>Proof and links</h3>
+          <p class="desc" id="pProofText"></p>
+          <div class="chips" id="pProofLinks" style="margin-top:12px;"></div>
+        </div>
+
+        <div class="section anchor" id="contact" data-section="contact">
+          <h3>Contact</h3>
+          <p class="desc" id="pContactText"></p>
+          <div class="chips" id="pContactLinks" style="margin-top:12px;"></div>
+        </div>
       </div>
-    </header>
-
-    <main>
-      <section class="panel cv active" id="cv-rafael" role="tabpanel" aria-labelledby="tab-rafael">
-        <div class="cv-header">
-          <h2 class="name">Rafael Lima Araujo Rego</h2>
-          <p class="subtitle">Founder | Quant / ML | Europe → SF (EF)</p>
-          <div class="links">
-            <a class="pill" href="#" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="pill" href="#" target="_blank" rel="noopener">GitHub</a>
-            <a class="pill" href="mailto:you@example.com">Email</a>
-          </div>
-          <div class="edit-hint">Edit placeholders directly in this file. No framework, no build step.</div>
-        </div>
-
-        <div class="grid">
-          <div class="section">
-            <h3>Summary <span class="badge">2–3 lines</span></h3>
-            <p>
-              Placeholder: concise one-paragraph summary of what you do, what you’re building,
-              and your strongest technical edge. Mention measurable impact if possible.
-            </p>
-
-            <div class="item">
-              <h3>Highlights <span class="badge">bullets</span></h3>
-              <ul>
-                <li>Placeholder: Built X that achieved Y (metric/time/revenue/accuracy).</li>
-                <li>Placeholder: Research/project with evidence (paper/demo/writeup).</li>
-                <li>Placeholder: Shipped systems/pipelines used by others.</li>
-              </ul>
-            </div>
-
-            <div class="item">
-              <h3>Experience <span class="badge">most recent first</span></h3>
-
-              <div class="item">
-                <p class="item-title">
-                  <span><strong>Role Title</strong> — Company / Org</span>
-                  <span>YYYY–YYYY</span>
-                </p>
-                <div class="item-meta">1 line context (domain, scale, responsibility).</div>
-                <ul>
-                  <li>What you built (tech) + impact metric.</li>
-                  <li>What you owned end-to-end (data, model, deployment, evaluation).</li>
-                </ul>
-              </div>
-
-              <div class="item">
-                <p class="item-title">
-                  <span><strong>Role Title</strong> — Company / Org</span>
-                  <span>YYYY–YYYY</span>
-                </p>
-                <div class="item-meta">Short description.</div>
-                <ul>
-                  <li>Achievement with numbers if possible.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="item">
-              <h3>Projects <span class="badge">3–5</span></h3>
-
-              <div class="item">
-                <p class="item-title">
-                  <span><strong>Project Name</strong> — one-line description</span>
-                  <span><a href="#" class="pill">Writeup</a> <a href="#" class="pill">Demo</a></span>
-                </p>
-                <div class="item-meta">NDA-friendly summary. State what you can share.</div>
-                <ul>
-                  <li><strong>Tech:</strong> Python, PyTorch, etc.</li>
-                  <li><strong>Your role:</strong> built core model + evaluation.</li>
-                  <li><strong>Outcome:</strong> improved X by Y% / reduced time by Z.</li>
-                </ul>
-              </div>
-
-              <div class="item">
-                <p class="item-title">
-                  <span><strong>Project Name</strong> — one-line description</span>
-                  <span><a href="#" class="pill">Writeup</a> <a href="#" class="pill">Demo</a></span>
-                </p>
-                <div class="item-meta">Short summary.</div>
-                <ul>
-                  <li><strong>Tech:</strong> …</li>
-                  <li><strong>Your role:</strong> …</li>
-                  <li><strong>Outcome:</strong> …</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h3>Education <span class="badge">top</span></h3>
-            <div class="item">
-              <p class="item-title">
-                <span><strong>University</strong> — Degree</span>
-                <span>YYYY–YYYY</span>
-              </p>
-              <div class="item-meta">Relevant coursework, awards, GPA (if you want).</div>
-            </div>
-
-            <div class="item">
-              <h3>Skills <span class="badge">stack</span></h3>
-              <ul>
-                <li><strong>Languages:</strong> Python, C++, …</li>
-                <li><strong>ML:</strong> time series, forecasting, deep learning, …</li>
-                <li><strong>Data:</strong> SQL, pipelines, dashboards, …</li>
-                <li><strong>Other:</strong> statistics, optimization, …</li>
-              </ul>
-            </div>
-
-            <div class="item">
-              <h3>Links <span class="badge">proof</span></h3>
-              <div class="links">
-                <a class="pill" href="#" target="_blank" rel="noopener">Writing</a>
-                <a class="pill" href="#" target="_blank" rel="noopener">Paper / PDF</a>
-                <a class="pill" href="#" target="_blank" rel="noopener">Repo</a>
-              </div>
-              <p class="edit-hint">Tip: add “sanitized writeups” here for NDA projects.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel cv" id="cv-iker" role="tabpanel" aria-labelledby="tab-iker">
-        <div class="cv-header">
-          <h2 class="name">Iker Alday Bonilla</h2>
-          <p class="subtitle">Founder | Engineering / Product | Europe → SF (EF)</p>
-          <div class="links">
-            <a class="pill" href="#" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="pill" href="#" target="_blank" rel="noopener">GitHub</a>
-            <a class="pill" href="mailto:you@example.com">Email</a>
-          </div>
-          <div class="edit-hint">Same structure as Rafael. Keep it symmetrical for readability.</div>
-        </div>
-
-        <div class="grid">
-          <div class="section">
-            <h3>Summary <span class="badge">2–3 lines</span></h3>
-            <p>
-              Placeholder: what Iker builds, the domain, and what he’s strongest at.
-              Keep it concrete and outcome-oriented.
-            </p>
-
-            <div class="item">
-              <h3>Highlights <span class="badge">bullets</span></h3>
-              <ul>
-                <li>Placeholder: shipped X feature/product used by Y users/teams.</li>
-                <li>Placeholder: built infrastructure/system; reduced cost/latency by Z.</li>
-                <li>Placeholder: led execution on tight timelines.</li>
-              </ul>
-            </div>
-
-            <div class="item">
-              <h3>Experience <span class="badge">most recent first</span></h3>
-
-              <div class="item">
-                <p class="item-title">
-                  <span><strong>Role Title</strong> — Company / Org</span>
-                  <span>YYYY–YYYY</span>
-                </p>
-                <div class="item-meta">One-liner context.</div>
-                <ul>
-                  <li>What he built + impact.</li>
-                  <li>Ownership scope.</li>
-                </ul>
-              </div>
-
-              <div class="item">
-                <p class="item-title">
-                  <span><strong>Role Title</strong> — Company / Org</span>
-                  <span>YYYY–YYYY</span>
-                </p>
-                <div class="item-meta">Short description.</div>
-                <ul>
-                  <li>Achievement with numbers.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="item">
-              <h3>Projects <span class="badge">3–5</span></h3>
-
-              <div class="item">
-                <p class="item-title">
-                  <span><strong>Project Name</strong> — one-line description</span>
-                  <span><a href="#" class="pill">Writeup</a> <a href="#" class="pill">Demo</a></span>
-                </p>
-                <div class="item-meta">NDA-friendly summary.</div>
-                <ul>
-                  <li><strong>Tech:</strong> …</li>
-                  <li><strong>Your role:</strong> …</li>
-                  <li><strong>Outcome:</strong> …</li>
-                </ul>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="section">
-            <h3>Education <span class="badge">top</span></h3>
-            <div class="item">
-              <p class="item-title">
-                <span><strong>University</strong> — Degree</span>
-                <span>YYYY–YYYY</span>
-              </p>
-              <div class="item-meta">Relevant coursework, awards.</div>
-            </div>
-
-            <div class="item">
-              <h3>Skills <span class="badge">stack</span></h3>
-              <ul>
-                <li><strong>Languages:</strong> …</li>
-                <li><strong>Systems:</strong> …</li>
-                <li><strong>Product:</strong> …</li>
-              </ul>
-            </div>
-
-            <div class="item">
-              <h3>Links <span class="badge">proof</span></h3>
-              <div class="links">
-                <a class="pill" href="#" target="_blank" rel="noopener">Writing</a>
-                <a class="pill" href="#" target="_blank" rel="noopener">Repo</a>
-                <a class="pill" href="#" target="_blank" rel="noopener">Demo</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <footer>
-        Built as a single static HTML file. Easy to edit. Hosted on GitHub Pages.
+        Single static file for GitHub Pages. Edit content in the "EDIT HERE" block in the source.
       </footer>
-    </main>
+    </section>
   </div>
 
   <script>
-    (function () {
-      const tabs = Array.from(document.querySelectorAll(".tabbtn"));
-      const panels = {
-        rafael: document.getElementById("cv-rafael"),
-        iker: document.getElementById("cv-iker"),
-      };
+    /* =========================
+       EDIT HERE: Site content
+       ========================= */
+    const DATA = {
+      rafael: {
+        name: "Rafael Lima Araujo Rego",
+        tagline: "Quant and ML. Research and systems. Europe to SF.",
+        chips: ["Quant", "ML", "Time series", "Optimization", "Python"],
+        overview:
+          "Write 4 to 6 lines here. Make it read like a product narrative: what you build, what you care about, and what makes you unusually effective. Keep it concrete and outcome-oriented.",
+        projectsIntro:
+          "A few selected projects. Each card is designed to be skimmable in 10 seconds.",
+        ndaNote:
+          "Some work is under NDA. Summaries are sanitized; details can be discussed privately.",
+        projects: [
+          {
+            title: "Project 1 - Confidential system",
+            meta: "Python | ML | Infra",
+            summary: "One sentence about the problem and what you built.",
+            bullets: [
+              "Tech: list 2 to 4 key tools or methods.",
+              "Role: what you personally owned end-to-end.",
+              "Outcome: a metric or a tangible result."
+            ],
+            links: [
+              { label: "Writeup", href: "#" },
+              { label: "Demo", href: "#" }
+            ]
+          },
+          {
+            title: "Project 2 - Public artifact",
+            meta: "Repo | Reproducible",
+            summary: "One sentence about what it shows and why it matters.",
+            bullets: [
+              "Tech: ...",
+              "Role: ...",
+              "Outcome: ..."
+            ],
+            links: [
+              { label: "Repo", href: "#" }
+            ]
+          }
+        ],
+        topLinks: [
+          { label: "LinkedIn", href: "#" },
+          { label: "GitHub", href: "#" },
+          { label: "Email", href: "mailto:you@example.com" }
+        ],
+        proofText:
+          "Put links that increase trust: a writeup, a demo, a repo, a slide deck. Keep it short.",
+        proofLinks: [
+          { label: "Sanitized writeup (PDF)", href: "#" },
+          { label: "Demo video", href: "#" },
+          { label: "Public repo", href: "#" }
+        ],
+        contactText:
+          "Best way to reach me. If you want, add timezone and typical response time.",
+        contactLinks: [
+          { label: "Email", href: "mailto:you@example.com" },
+          { label: "LinkedIn DM", href: "#" }
+        ]
+      },
 
-      function activate(which, pushHash) {
-        const isRafael = which === "rafael";
-        tabs.forEach(btn => {
-          const selected = btn.dataset.target === which;
-          btn.setAttribute("aria-selected", selected ? "true" : "false");
-        });
-
-        Object.entries(panels).forEach(([key, el]) => {
-          el.classList.toggle("active", key === which);
-        });
-
-        if (pushHash) {
-          location.hash = isRafael ? "#rafael" : "#iker";
-        }
+      iker: {
+        name: "Iker Alday Bonilla",
+        tagline: "Engineering and product. Execution heavy. Europe to SF.",
+        chips: ["Engineering", "Product", "Systems", "Shipping", "Speed"],
+        overview:
+          "Write 4 to 6 lines here. Emphasize what you build, how you execute, and the kinds of systems/products you have shipped.",
+        projectsIntro:
+          "Selected work designed to read like a product page, not a CV.",
+        ndaNote:
+          "Some work is under NDA. Summaries are sanitized; details can be discussed privately.",
+        projects: [
+          {
+            title: "Project 1 - Product / system",
+            meta: "Backend | Frontend",
+            summary: "One sentence describing what it is and who it helps.",
+            bullets: [
+              "Tech: ...",
+              "Role: ...",
+              "Outcome: ..."
+            ],
+            links: [
+              { label: "Writeup", href: "#" },
+              { label: "Demo", href: "#" }
+            ]
+          },
+          {
+            title: "Project 2 - Automation / tooling",
+            meta: "Ops | Speed",
+            summary: "One sentence about the operational impact.",
+            bullets: [
+              "Tech: ...",
+              "Role: ...",
+              "Outcome: ..."
+            ],
+            links: [
+              { label: "Repo", href: "#" }
+            ]
+          }
+        ],
+        topLinks: [
+          { label: "LinkedIn", href: "#" },
+          { label: "GitHub", href: "#" },
+          { label: "Email", href: "mailto:you@example.com" }
+        ],
+        proofText:
+          "Put the 2 to 4 links that best prove you can ship.",
+        proofLinks: [
+          { label: "Demo", href: "#" },
+          { label: "Repo", href: "#" }
+        ],
+        contactText:
+          "Best way to reach me.",
+        contactLinks: [
+          { label: "Email", href: "mailto:you@example.com" },
+          { label: "LinkedIn DM", href: "#" }
+        ]
       }
+    };
 
-      tabs.forEach(btn => {
-        btn.addEventListener("click", () => activate(btn.dataset.target, true));
+    /* =========================
+       Rendering + navigation
+       ========================= */
+    const els = {
+      body: document.body,
+      home: document.getElementById("home"),
+      profile: document.getElementById("profile"),
+      pName: document.getElementById("pName"),
+      pTagline: document.getElementById("pTagline"),
+      pChips: document.getElementById("pChips"),
+      pLinks: document.getElementById("pLinks"),
+      pOverview: document.getElementById("pOverview"),
+      pProjectsIntro: document.getElementById("pProjectsIntro"),
+      pProjectCards: document.getElementById("pProjectCards"),
+      pNdaNote: document.getElementById("pNdaNote"),
+      pProofText: document.getElementById("pProofText"),
+      pProofLinks: document.getElementById("pProofLinks"),
+      pContactText: document.getElementById("pContactText"),
+      pContactLinks: document.getElementById("pContactLinks"),
+      backBtn: document.getElementById("backBtn"),
+      copyLinkBtn: document.getElementById("copyLinkBtn"),
+      nav: document.getElementById("nav"),
+    };
+
+    let current = null;
+
+    function el(tag, attrs = {}, children = []) {
+      const node = document.createElement(tag);
+      Object.entries(attrs).forEach(([k, v]) => {
+        if (k === "class") node.className = v;
+        else if (k === "text") node.textContent = v;
+        else node.setAttribute(k, v);
+      });
+      children.forEach(c => node.appendChild(typeof c === "string" ? document.createTextNode(c) : c));
+      return node;
+    }
+
+    function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+
+    function renderPerson(key) {
+      const p = DATA[key];
+      if (!p) return;
+
+      current = key;
+
+      els.pName.textContent = p.name;
+      els.pTagline.textContent = p.tagline;
+
+      clear(els.pChips);
+      p.chips.forEach(t => els.pChips.appendChild(el("span", { class: "chip", text: t })));
+
+      clear(els.pLinks);
+      p.topLinks.forEach(l => {
+        els.pLinks.appendChild(el("a", { class: "chip", href: l.href, target: "_blank", rel: "noopener", text: l.label }));
       });
 
-      // Support direct links: /#rafael or /#iker
-      const hash = (location.hash || "").replace("#", "").toLowerCase();
-      if (hash === "iker") activate("iker", false);
-      if (hash === "rafael") activate("rafael", false);
-    })();
+      els.pOverview.textContent = p.overview;
+      els.pProjectsIntro.textContent = p.projectsIntro;
+      els.pNdaNote.textContent = p.ndaNote;
+
+      clear(els.pProjectCards);
+      p.projects.forEach(pr => {
+        const actions = el("div", { class: "card-actions" });
+        (pr.links || []).forEach(link => {
+          actions.appendChild(el("a", { class: "pill", href: link.href, target: "_blank", rel: "noopener", text: link.label }));
+        });
+
+        const ul = el("ul");
+        (pr.bullets || []).forEach(b => ul.appendChild(el("li", { text: b })));
+
+        els.pProjectCards.appendChild(
+          el("div", { class: "card" }, [
+            el("div", { class: "card-title" }, [
+              el("strong", { text: pr.title }),
+              el("span", { text: pr.meta || "" })
+            ]),
+            el("p", { text: pr.summary || "" }),
+            ul,
+            actions
+          ])
+        );
+      });
+
+      els.pProofText.textContent = p.proofText;
+      clear(els.pProofLinks);
+      p.proofLinks.forEach(l => {
+        els.pProofLinks.appendChild(el("a", { class: "pill", href: l.href, target: "_blank", rel: "noopener", text: l.label }));
+      });
+
+      els.pContactText.textContent = p.contactText;
+      clear(els.pContactLinks);
+      p.contactLinks.forEach(l => {
+        els.pContactLinks.appendChild(el("a", { class: "pill", href: l.href, target: "_blank", rel: "noopener", text: l.label }));
+      });
+    }
+
+    function showHome(pushHash = true) {
+      current = null;
+      els.body.classList.remove("mode-profile");
+      els.body.classList.add("mode-home");
+
+      els.profile.classList.remove("active");
+      els.home.style.display = "block";
+
+      els.backBtn.style.display = "none";
+      els.copyLinkBtn.style.display = "none";
+
+      if (pushHash) history.pushState(null, "", "#");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showProfile(personKey, pushHash = true) {
+      renderPerson(personKey);
+
+      els.body.classList.remove("mode-home");
+      els.body.classList.add("mode-profile");
+
+      els.home.style.display = "none";
+      els.profile.classList.add("active");
+
+      els.backBtn.style.display = "inline-flex";
+      els.copyLinkBtn.style.display = "inline-flex";
+
+      if (pushHash) history.pushState(null, "", "#" + personKey);
+
+      // Land at top of profile hero
+      window.scrollTo({ top: els.profile.offsetTop - 10, behavior: "smooth" });
+      setActiveNav("overview");
+    }
+
+    function setActiveNav(which) {
+      const links = Array.from(els.nav.querySelectorAll("a[data-spy]"));
+      links.forEach(a => a.classList.toggle("active", a.getAttribute("data-spy") === which));
+    }
+
+    // Handle clicks on landing name buttons
+    document.querySelectorAll(".person-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-person");
+        showProfile(key, true);
+      });
+    });
+
+    // Back button
+    els.backBtn.addEventListener("click", () => showHome(true));
+
+    // Copy direct profile link
+    els.copyLinkBtn.addEventListener("click", async () => {
+      const url = new URL(window.location.href);
+      if (current) url.hash = "#" + current;
+      try {
+        await navigator.clipboard.writeText(url.toString());
+        els.copyLinkBtn.textContent = "Copied";
+        setTimeout(() => (els.copyLinkBtn.textContent = "Copy link"), 900);
+      } catch (e) {
+        // fallback
+        prompt("Copy this link:", url.toString());
+      }
+    });
+
+    // Smooth scroll nav
+    els.nav.querySelectorAll("a[href^='#']").forEach(a => {
+      a.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        const id = a.getAttribute("href").slice(1);
+        const target = document.getElementById(id);
+        if (!target) return;
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    // Section spy for sticky nav
+    const spySections = ["overview", "projects", "proof", "contact"]
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    const io = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible && visible.target && visible.target.id) {
+        setActiveNav(visible.target.id);
+      }
+    }, { root: null, threshold: [0.22, 0.35, 0.5, 0.65] });
+
+    spySections.forEach(s => io.observe(s));
+
+    // Load based on hash
+    function syncFromHash() {
+      const h = (location.hash || "").replace("#", "").toLowerCase();
+      if (h === "rafael" || h === "iker") showProfile(h, false);
+      else showHome(false);
+    }
+
+    window.addEventListener("hashchange", syncFromHash);
+    syncFromHash();
   </script>
 </body>
 </html>
-
