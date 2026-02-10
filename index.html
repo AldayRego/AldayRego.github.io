@@ -1,1 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AldayRego | Rafael & Iker</title>
+  <meta name="description" content="Two-person founder portfolio: Rafael Lima Araujo Rego and Iker Alday Bonilla." />
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --panel: rgba(255,255,255,0.06);
+      --panel-2: rgba(255,255,255,0.10);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --muted-2: rgba(255,255,255,0.52);
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 14px 40px rgba(0,0,0,0.45);
+      --radius: 18px;
+      --maxw: 980px;
+      --accent: #7c5cff;
+      --accent-2: #2dd4bf;
+      --focus: rgba(124, 92, 255, 0.55);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,92,255,0.25), transparent 55%),
+                  radial-gradient(900px 650px at 85% 25%, rgba(45,212,191,0.18), transparent 55%),
+                  radial-gradient(1000px 700px at 45% 95%, rgba(124,92,255,0.10), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    a { color: inherit; }
+    a:hover { opacity: 0.92; }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 32px 18px 64px;
+    }
+
+    header {
+      display: grid;
+      gap: 14px;
+      padding: 18px 18px 10px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .brand h1 {
+      font-size: 18px;
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+    .brand .tag {
+      font-size: 13px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.22);
+    }
+
+    .hint {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tabbtn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.22);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      font-size: 14px;
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .tabbtn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.20); }
+    .tabbtn:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+    .tabbtn[aria-selected="true"] {
+      background: linear-gradient(180deg, rgba(124,92,255,0.22), rgba(124,92,255,0.10));
+      border-color: rgba(124,92,255,0.40);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(124,92,255,0.15);
+    }
+    .dot.alt {
+      background: var(--accent-2);
+      box-shadow: 0 0 0 6px rgba(45,212,191,0.15);
+    }
+
+    main {
+      margin-top: 16px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .cv {
+      display: none;
+      animation: fadeIn 160ms ease-out;
+    }
+    .cv.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cv-header {
+      display: grid;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .name {
+      font-size: 22px;
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .section {
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.20);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .section h3 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      color: rgba(255,255,255,0.88);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .section p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    li { margin: 6px 0; }
+
+    .item {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255,255,255,0.14);
+    }
+    .item:first-child {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .item-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: rgba(255,255,255,0.90);
+      margin: 0;
+    }
+    .item-meta {
+      color: var(--muted-2);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .pill {
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .pill:hover { border-color: rgba(255,255,255,0.22); }
+
+    footer {
+      margin-top: 12px;
+      text-align: center;
+      color: var(--muted-2);
+      font-size: 12px;
+    }
+
+    /* Editable helper: makes it obvious where to change things */
+    .edit-hint {
+      color: var(--muted-2);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="topline">
+        <div class="brand">
+          <h1>AldayRego</h1>
+          <span class="tag">Two-person portfolio</span>
+        </div>
+        <div class="hint">Click a name to view the CV. Share this link in EF.</div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Select profile">
+        <button class="tabbtn" id="tab-rafael" role="tab" aria-selected="true" aria-controls="cv-rafael" data-target="rafael">
+          <span class="dot" aria-hidden="true"></span>
+          Rafael Lima Araujo Rego
+        </button>
+        <button class="tabbtn" id="tab-iker" role="tab" aria-selected="false" aria-controls="cv-iker" data-target="iker">
+          <span class="dot alt" aria-hidden="true"></span>
+          Iker Alday Bonilla
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel cv active" id="cv-rafael" role="tabpanel" aria-labelledby="tab-rafael">
+        <div class="cv-header">
+          <h2 class="name">Rafael Lima Araujo Rego</h2>
+          <p class="subtitle">Founder | Quant / ML | Europe → SF (EF)</p>
+          <div class="links">
+            <a class="pill" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="pill" href="#" target="_blank" rel="noopener">GitHub</a>
+            <a class="pill" href="mailto:you@example.com">Email</a>
+          </div>
+          <div class="edit-hint">Edit placeholders directly in this file. No framework, no build step.</div>
+        </div>
+
+        <div class="grid">
+          <div class="section">
+            <h3>Summary <span class="badge">2–3 lines</span></h3>
+            <p>
+              Placeholder: concise one-paragraph summary of what you do, what you’re building,
+              and your strongest technical edge. Mention measurable impact if possible.
+            </p>
+
+            <div class="item">
+              <h3>Highlights <span class="badge">bullets</span></h3>
+              <ul>
+                <li>Placeholder: Built X that achieved Y (metric/time/revenue/accuracy).</li>
+                <li>Placeholder: Research/project with evidence (paper/demo/writeup).</li>
+                <li>Placeholder: Shipped systems/pipelines used by others.</li>
+              </ul>
+            </div>
+
+            <div class="item">
+              <h3>Experience <span class="badge">most recent first</span></h3>
+
+              <div class="item">
+                <p class="item-title">
+                  <span><strong>Role Title</strong> — Company / Org</span>
+                  <span>YYYY–YYYY</span>
+                </p>
+                <div class="item-meta">1 line context (domain, scale, responsibility).</div>
+                <ul>
+                  <li>What you built (tech) + impact metric.</li>
+                  <li>What you owned end-to-end (data, model, deployment, evaluation).</li>
+                </ul>
+              </div>
+
+              <div class="item">
+                <p class="item-title">
+                  <span><strong>Role Title</strong> — Company / Org</span>
+                  <span>YYYY–YYYY</span>
+                </p>
+                <div class="item-meta">Short description.</div>
+                <ul>
+                  <li>Achievement with numbers if possible.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="item">
+              <h3>Projects <span class="badge">3–5</span></h3>
+
+              <div class="item">
+                <p class="item-title">
+                  <span><strong>Project Name</strong> — one-line description</span>
+                  <span><a href="#" class="pill">Writeup</a> <a href="#" class="pill">Demo</a></span>
+                </p>
+                <div class="item-meta">NDA-friendly summary. State what you can share.</div>
+                <ul>
+                  <li><strong>Tech:</strong> Python, PyTorch, etc.</li>
+                  <li><strong>Your role:</strong> built core model + evaluation.</li>
+                  <li><strong>Outcome:</strong> improved X by Y% / reduced time by Z.</li>
+                </ul>
+              </div>
+
+              <div class="item">
+                <p class="item-title">
+                  <span><strong>Project Name</strong> — one-line description</span>
+                  <span><a href="#" class="pill">Writeup</a> <a href="#" class="pill">Demo</a></span>
+                </p>
+                <div class="item-meta">Short summary.</div>
+                <ul>
+                  <li><strong>Tech:</strong> …</li>
+                  <li><strong>Your role:</strong> …</li>
+                  <li><strong>Outcome:</strong> …</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Education <span class="badge">top</span></h3>
+            <div class="item">
+              <p class="item-title">
+                <span><strong>University</strong> — Degree</span>
+                <span>YYYY–YYYY</span>
+              </p>
+              <div class="item-meta">Relevant coursework, awards, GPA (if you want).</div>
+            </div>
+
+            <div class="item">
+              <h3>Skills <span class="badge">stack</span></h3>
+              <ul>
+                <li><strong>Languages:</strong> Python, C++, …</li>
+                <li><strong>ML:</strong> time series, forecasting, deep learning, …</li>
+                <li><strong>Data:</strong> SQL, pipelines, dashboards, …</li>
+                <li><strong>Other:</strong> statistics, optimization, …</li>
+              </ul>
+            </div>
+
+            <div class="item">
+              <h3>Links <span class="badge">proof</span></h3>
+              <div class="links">
+                <a class="pill" href="#" target="_blank" rel="noopener">Writing</a>
+                <a class="pill" href="#" target="_blank" rel="noopener">Paper / PDF</a>
+                <a class="pill" href="#" target="_blank" rel="noopener">Repo</a>
+              </div>
+              <p class="edit-hint">Tip: add “sanitized writeups” here for NDA projects.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel cv" id="cv-iker" role="tabpanel" aria-labelledby="tab-iker">
+        <div class="cv-header">
+          <h2 class="name">Iker Alday Bonilla</h2>
+          <p class="subtitle">Founder | Engineering / Product | Europe → SF (EF)</p>
+          <div class="links">
+            <a class="pill" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="pill" href="#" target="_blank" rel="noopener">GitHub</a>
+            <a class="pill" href="mailto:you@example.com">Email</a>
+          </div>
+          <div class="edit-hint">Same structure as Rafael. Keep it symmetrical for readability.</div>
+        </div>
+
+        <div class="grid">
+          <div class="section">
+            <h3>Summary <span class="badge">2–3 lines</span></h3>
+            <p>
+              Placeholder: what Iker builds, the domain, and what he’s strongest at.
+              Keep it concrete and outcome-oriented.
+            </p>
+
+            <div class="item">
+              <h3>Highlights <span class="badge">bullets</span></h3>
+              <ul>
+                <li>Placeholder: shipped X feature/product used by Y users/teams.</li>
+                <li>Placeholder: built infrastructure/system; reduced cost/latency by Z.</li>
+                <li>Placeholder: led execution on tight timelines.</li>
+              </ul>
+            </div>
+
+            <div class="item">
+              <h3>Experience <span class="badge">most recent first</span></h3>
+
+              <div class="item">
+                <p class="item-title">
+                  <span><strong>Role Title</strong> — Company / Org</span>
+                  <span>YYYY–YYYY</span>
+                </p>
+                <div class="item-meta">One-liner context.</div>
+                <ul>
+                  <li>What he built + impact.</li>
+                  <li>Ownership scope.</li>
+                </ul>
+              </div>
+
+              <div class="item">
+                <p class="item-title">
+                  <span><strong>Role Title</strong> — Company / Org</span>
+                  <span>YYYY–YYYY</span>
+                </p>
+                <div class="item-meta">Short description.</div>
+                <ul>
+                  <li>Achievement with numbers.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="item">
+              <h3>Projects <span class="badge">3–5</span></h3>
+
+              <div class="item">
+                <p class="item-title">
+                  <span><strong>Project Name</strong> — one-line description</span>
+                  <span><a href="#" class="pill">Writeup</a> <a href="#" class="pill">Demo</a></span>
+                </p>
+                <div class="item-meta">NDA-friendly summary.</div>
+                <ul>
+                  <li><strong>Tech:</strong> …</li>
+                  <li><strong>Your role:</strong> …</li>
+                  <li><strong>Outcome:</strong> …</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Education <span class="badge">top</span></h3>
+            <div class="item">
+              <p class="item-title">
+                <span><strong>University</strong> — Degree</span>
+                <span>YYYY–YYYY</span>
+              </p>
+              <div class="item-meta">Relevant coursework, awards.</div>
+            </div>
+
+            <div class="item">
+              <h3>Skills <span class="badge">stack</span></h3>
+              <ul>
+                <li><strong>Languages:</strong> …</li>
+                <li><strong>Systems:</strong> …</li>
+                <li><strong>Product:</strong> …</li>
+              </ul>
+            </div>
+
+            <div class="item">
+              <h3>Links <span class="badge">proof</span></h3>
+              <div class="links">
+                <a class="pill" href="#" target="_blank" rel="noopener">Writing</a>
+                <a class="pill" href="#" target="_blank" rel="noopener">Repo</a>
+                <a class="pill" href="#" target="_blank" rel="noopener">Demo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        Built as a single static HTML file. Easy to edit. Hosted on GitHub Pages.
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const tabs = Array.from(document.querySelectorAll(".tabbtn"));
+      const panels = {
+        rafael: document.getElementById("cv-rafael"),
+        iker: document.getElementById("cv-iker"),
+      };
+
+      function activate(which, pushHash) {
+        const isRafael = which === "rafael";
+        tabs.forEach(btn => {
+          const selected = btn.dataset.target === which;
+          btn.setAttribute("aria-selected", selected ? "true" : "false");
+        });
+
+        Object.entries(panels).forEach(([key, el]) => {
+          el.classList.toggle("active", key === which);
+        });
+
+        if (pushHash) {
+          location.hash = isRafael ? "#rafael" : "#iker";
+        }
+      }
+
+      tabs.forEach(btn => {
+        btn.addEventListener("click", () => activate(btn.dataset.target, true));
+      });
+
+      // Support direct links: /#rafael or /#iker
+      const hash = (location.hash || "").replace("#", "").toLowerCase();
+      if (hash === "iker") activate("iker", false);
+      if (hash === "rafael") activate("rafael", false);
+    })();
+  </script>
+</body>
+</html>
 
