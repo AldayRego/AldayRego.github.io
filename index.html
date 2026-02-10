@@ -1,834 +1,413 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AldayRego | Rafael & Iker</title>
-  <meta name="description" content="Founder portfolios for Rafael Lima Araujo Rego and Iker Alday Bonilla." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rafael & Iker</title>
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #fff; color: #1a1a1a; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
 
-  <style>
-    :root {
-      --bg: #ffffff;
-      --text: #0b1220;
-      --muted: #516079;
-      --muted2: #6b7a92;
-      --border: rgba(16, 24, 40, 0.12);
-      --card: #ffffff;
-      --soft: #f6f8fb;
-      --shadow: 0 18px 50px rgba(16, 24, 40, 0.10);
-      --shadow2: 0 10px 30px rgba(16, 24, 40, 0.08);
-      --radius: 18px;
-      --radius2: 14px;
-      --maxw: 1080px;
-      --accent: #1f6feb; /* clean blue */
-      --accent2: #0ea5e9;
-    }
+/* ========== LANDING (NAME SELECTION) ========== */
+#landing {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  padding: 2rem;
+}
+#landing.hidden { opacity: 0; pointer-events: none; position: absolute; transform: translateY(-20px); }
+.landing-subtitle { font-size: 1rem; color: #888; margin-bottom: 3rem; letter-spacing: 0.03em; }
+.name-cards { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
+.name-card {
+  width: 320px; padding: 3rem 2.5rem; border: 1px solid #e0e0e0; border-radius: 16px;
+  cursor: pointer; transition: all 0.25s ease; background: #fff; text-align: center;
+}
+.name-card:hover { border-color: #111; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-4px); }
+.name-card h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
+.name-card p { font-size: 0.95rem; color: #666; }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      line-height: 1.45;
-    }
+/* ========== PERSON PAGE ========== */
+.person-page {
+  display: none; opacity: 0; transition: opacity 0.4s ease;
+}
+.person-page.active { display: block; animation: fadeIn 0.5s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-    a { color: inherit; text-decoration: none; }
-    a:hover { opacity: 0.92; }
+/* ========== STICKY NAV ========== */
+.sticky-nav {
+  position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #f0f0f0; padding: 0 2rem;
+}
+.sticky-nav-inner {
+  max-width: 960px; margin: 0 auto; display: flex; align-items: center;
+  justify-content: space-between; height: 56px;
+}
+.nav-back {
+  font-size: 0.875rem; color: #555; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: #000; }
+.nav-links { display: flex; gap: 1.5rem; }
+.nav-links a {
+  font-size: 0.85rem; color: #555; transition: color 0.2s; font-weight: 500; letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: #000; }
 
-    .wrap {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 28px 18px 80px;
-    }
+/* ========== HERO ========== */
+.hero {
+  max-width: 720px; margin: 0 auto; padding: 6rem 2rem 4rem; text-align: center;
+}
+.hero h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.hero .tagline { font-size: 1.2rem; color: #555; max-width: 520px; margin: 0 auto; }
 
-    /* Top bar */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-    }
+/* ========== SECTIONS ========== */
+.section {
+  max-width: 800px; margin: 0 auto; padding: 4rem 2rem;
+}
+.section h2 {
+  font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+  color: #999; margin-bottom: 2rem;
+}
+.section p { color: #444; font-size: 1rem; line-height: 1.75; }
+.section .nda-note {
+  font-size: 0.85rem; color: #999; font-style: italic; margin-top: 1rem;
+  padding: 0.75rem 1rem; background: #fafafa; border-radius: 8px; border: 1px solid #f0f0f0;
+}
+.divider { max-width: 800px; margin: 0 auto; border: none; border-top: 1px solid #f0f0f0; }
 
-    .topbar-inner {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
+/* ========== PROJECT CARDS ========== */
+.projects-grid { display: grid; gap: 1.5rem; }
+.project-card {
+  border: 1px solid #e8e8e8; border-radius: 12px; padding: 2rem;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.project-card:hover { border-color: #ccc; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+.project-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.35rem; }
+.project-card .summary { font-size: 0.95rem; color: #666; margin-bottom: 1rem; }
+.project-card ul { list-style: none; margin-bottom: 1.25rem; }
+.project-card ul li {
+  font-size: 0.9rem; color: #555; padding: 0.2rem 0; padding-left: 1.1rem; position: relative;
+}
+.project-card ul li::before {
+  content: ""; position: absolute; left: 0; top: 0.65em;
+  width: 5px; height: 5px; background: #ccc; border-radius: 50%;
+}
+.project-card .card-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn-sm {
+  font-size: 0.8rem; font-weight: 500; padding: 0.4rem 1rem; border-radius: 6px;
+  border: 1px solid #ddd; color: #333; background: #fff; cursor: pointer;
+  transition: all 0.2s; display: inline-block;
+}
+.btn-sm:hover { border-color: #111; background: #111; color: #fff; }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 220px;
-    }
+/* ========== PROOF / LINKS ========== */
+.links-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.link-btn {
+  padding: 0.7rem 1.5rem; border: 1px solid #ddd; border-radius: 8px;
+  font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.4rem; background: #fff; color: #333;
+}
+.link-btn:hover { border-color: #111; background: #111; color: #fff; }
+.link-btn .arrow { transition: transform 0.2s; }
+.link-btn:hover .arrow { transform: translateX(2px); }
 
-    .logo {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(31,111,235,0.18), rgba(14,165,233,0.16));
-      border: 1px solid rgba(31,111,235,0.25);
-      display: grid;
-      place-items: center;
-      color: var(--accent);
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
+/* ========== CONTACT ========== */
+.contact-content { text-align: center; padding: 2rem 0; }
+.contact-content .email-link {
+  font-size: 1.15rem; font-weight: 500; border-bottom: 1px solid #ccc;
+  padding-bottom: 2px; transition: border-color 0.2s;
+}
+.contact-content .email-link:hover { border-color: #111; }
+.contact-content p { color: #777; margin-top: 0.75rem; font-size: 0.9rem; }
 
-    .brand-title {
-      display: grid;
-      gap: 2px;
-    }
+/* ========== FOOTER ========== */
+.person-footer {
+  text-align: center; padding: 3rem 2rem; color: #bbb; font-size: 0.8rem;
+}
 
-    .brand-title strong {
-      font-size: 14px;
-      letter-spacing: 0.2px;
-    }
-    .brand-title span {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .nav {
-      display: none;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .nav a {
-      font-size: 13px;
-      color: var(--muted);
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-    .nav a:hover {
-      color: var(--text);
-      border-color: var(--border);
-      background: #fff;
-    }
-    .nav a.active {
-      color: var(--text);
-      border-color: rgba(31,111,235,0.25);
-      background: rgba(31,111,235,0.06);
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn {
-      appearance: none;
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text);
-      padding: 9px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 13px;
-      box-shadow: 0 1px 0 rgba(16,24,40,0.04);
-      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
-      white-space: nowrap;
-    }
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow2);
-      border-color: rgba(31,111,235,0.25);
-    }
-    .btn.primary {
-      border-color: rgba(31,111,235,0.30);
-      background: linear-gradient(180deg, rgba(31,111,235,0.10), rgba(31,111,235,0.05));
-      color: var(--text);
-    }
-    .btn.link {
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      color: var(--muted);
-      padding: 8px 8px;
-    }
-    .btn.link:hover { color: var(--text); }
-
-    /* Landing */
-    .hero {
-      padding: 44px 0 20px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 22px;
-      align-items: center;
-    }
-
-    @media (max-width: 920px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .brand { min-width: unset; }
-    }
-
-    .headline {
-      font-size: 34px;
-      line-height: 1.05;
-      letter-spacing: -0.6px;
-      margin: 0;
-    }
-    .subhead {
-      margin: 12px 0 0;
-      font-size: 15px;
-      color: var(--muted);
-      max-width: 60ch;
-    }
-
-    .select-card {
-      border: 1px solid var(--border);
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-
-    .select-title {
-      font-size: 13px;
-      color: var(--muted2);
-      margin: 0 0 10px;
-    }
-
-    .person-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .person-btn {
-      display: grid;
-      gap: 6px;
-      text-align: left;
-      padding: 14px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: #fff;
-      cursor: pointer;
-      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
-    }
-    .person-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow2);
-      border-color: rgba(31,111,235,0.25);
-    }
-    .person-btn strong {
-      font-size: 15px;
-      letter-spacing: 0.1px;
-    }
-    .person-btn span {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .note {
-      margin-top: 12px;
-      font-size: 12px;
-      color: var(--muted2);
-    }
-
-    /* Profile page */
-    .profile {
-      display: none;
-      padding-top: 18px;
-    }
-    .profile.active { display: block; }
-
-    .profile-hero {
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(31,111,235,0.06), rgba(255,255,255,0.98));
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: var(--shadow);
-      margin-top: 14px;
-    }
-
-    .profile-hero h2 {
-      margin: 0;
-      font-size: 26px;
-      letter-spacing: -0.3px;
-    }
-
-    .profile-hero p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      max-width: 72ch;
-      font-size: 15px;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-    .chip {
-      font-size: 12px;
-      color: var(--text);
-      border: 1px solid var(--border);
-      background: #fff;
-      border-radius: 999px;
-      padding: 6px 10px;
-    }
-
-    .sections {
-      margin-top: 16px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .section {
-      border: 1px solid var(--border);
-      background: #fff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      padding: 18px;
-    }
-
-    .section h3 {
-      margin: 0;
-      font-size: 14px;
-      letter-spacing: 0.2px;
-    }
-    .section .desc {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      max-width: 80ch;
-    }
-
-    .cards {
-      margin-top: 14px;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-    }
-
-    .card {
-      grid-column: span 6;
-      border: 1px solid var(--border);
-      border-radius: var(--radius2);
-      padding: 14px;
-      background: var(--soft);
-      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
-    }
-    .card:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow2);
-      border-color: rgba(31,111,235,0.25);
-      background: #fff;
-    }
-
-    @media (max-width: 900px) {
-      .card { grid-column: span 12; }
-      .headline { font-size: 30px; }
-    }
-
-    .card-title {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .card-title strong {
-      font-size: 14px;
-    }
-    .card-title span {
-      font-size: 12px;
-      color: var(--muted2);
-    }
-    .card p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .card ul {
-      margin: 10px 0 0 18px;
-      padding: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .card li { margin: 6px 0; }
-
-    .card-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #fff;
-      font-size: 12px;
-      color: var(--text);
-    }
-    .pill:hover { border-color: rgba(31,111,235,0.25); }
-
-    .mutedline {
-      margin-top: 12px;
-      font-size: 12px;
-      color: var(--muted2);
-    }
-
-    /* simple "page mode" */
-    .mode-home .nav { display: none; }
-    .mode-profile .nav { display: flex; }
-
-    /* anchor spacing for sticky header */
-    .anchor {
-      scroll-margin-top: 74px;
-    }
-
-    footer {
-      margin-top: 24px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-      color: var(--muted2);
-      font-size: 12px;
-      text-align: center;
-    }
-  </style>
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 2rem; }
+  .hero { padding: 4rem 1.5rem 3rem; }
+  .section { padding: 3rem 1.5rem; }
+  .name-card { width: 100%; max-width: 320px; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 0.78rem; }
+}
+</style>
 </head>
+<body>
 
-<body class="mode-home">
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="logo">AR</div>
-        <div class="brand-title">
-          <strong>AldayRego</strong>
-          <span>Two founders, selected work</span>
-        </div>
-      </div>
+<!-- ============================== -->
+<!-- LANDING PAGE                    -->
+<!-- ============================== -->
+<div id="landing">
+  <p class="landing-subtitle">Select a profile</p>
+  <div class="name-cards" id="nameCards"></div>
+</div>
 
-      <nav class="nav" id="nav">
-        <a href="#overview" data-spy="overview">Overview</a>
-        <a href="#projects" data-spy="projects">Projects</a>
-        <a href="#proof" data-spy="proof">Proof</a>
-        <a href="#contact" data-spy="contact">Contact</a>
-      </nav>
+<!-- Person pages rendered dynamically -->
+<div id="pages"></div>
 
-      <div class="top-actions">
-        <button class="btn link" id="backBtn" type="button" style="display:none;">Back</button>
-        <button class="btn primary" id="copyLinkBtn" type="button" style="display:none;">Copy link</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="wrap">
-    <!-- HOME -->
-    <section class="hero" id="home">
-      <div class="hero-grid">
-        <div>
-          <h1 class="headline">Two founders. Clear proof. Easy to skim.</h1>
-          <p class="subhead">
-            We keep public artifacts minimal and high-signal. Some work is under NDA; summaries are sanitized.
-            Pick a profile to view selected projects and links.
-          </p>
-        </div>
-
-        <div class="select-card">
-          <p class="select-title">Select a profile</p>
-
-          <div class="person-grid">
-            <button class="person-btn" type="button" data-person="rafael">
-              <strong>Rafael Lima Araujo Rego</strong>
-              <span>Quant and ML. Research and systems.</span>
-            </button>
-
-            <button class="person-btn" type="button" data-person="iker">
-              <strong>Iker Alday Bonilla</strong>
-              <span>Engineering and product. Execution heavy.</span>
-            </button>
-          </div>
-
-          <div class="note">
-            Tip: You can share direct links like <span style="color:var(--text);">.../#rafael</span> or <span style="color:var(--text);">.../#iker</span>.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROFILE -->
-    <section class="profile" id="profile">
-      <div class="profile-hero">
-        <h2 id="pName">Name</h2>
-        <p id="pTagline">Tagline</p>
-        <div class="chips" id="pChips"></div>
-        <div class="chips" id="pLinks" style="margin-top:12px;"></div>
-      </div>
-
-      <div class="sections">
-        <div class="section anchor" id="overview" data-section="overview">
-          <h3>Overview</h3>
-          <p class="desc" id="pOverview"></p>
-        </div>
-
-        <div class="section anchor" id="projects" data-section="projects">
-          <h3>Selected Projects</h3>
-          <p class="desc" id="pProjectsIntro"></p>
-          <div class="cards" id="pProjectCards"></div>
-          <div class="mutedline" id="pNdaNote"></div>
-        </div>
-
-        <div class="section anchor" id="proof" data-section="proof">
-          <h3>Proof and links</h3>
-          <p class="desc" id="pProofText"></p>
-          <div class="chips" id="pProofLinks" style="margin-top:12px;"></div>
-        </div>
-
-        <div class="section anchor" id="contact" data-section="contact">
-          <h3>Contact</h3>
-          <p class="desc" id="pContactText"></p>
-          <div class="chips" id="pContactLinks" style="margin-top:12px;"></div>
-        </div>
-      </div>
-
-      <footer>
-        Single static file for GitHub Pages. Edit content in the "EDIT HERE" block in the source.
-      </footer>
-    </section>
-  </div>
-
-  <script>
-    /* =========================
-       EDIT HERE: Site content
-       ========================= */
-    const DATA = {
-      rafael: {
-        name: "Rafael Lima Araujo Rego",
-        tagline: "Quant and ML. Research and systems. Europe to SF.",
-        chips: ["Quant", "ML", "Time series", "Optimization", "Python"],
-        overview:
-          "Write 4 to 6 lines here. Make it read like a product narrative: what you build, what you care about, and what makes you unusually effective. Keep it concrete and outcome-oriented.",
-        projectsIntro:
-          "A few selected projects. Each card is designed to be skimmable in 10 seconds.",
-        ndaNote:
-          "Some work is under NDA. Summaries are sanitized; details can be discussed privately.",
-        projects: [
-          {
-            title: "Project 1 - Confidential system",
-            meta: "Python | ML | Infra",
-            summary: "One sentence about the problem and what you built.",
-            bullets: [
-              "Tech: list 2 to 4 key tools or methods.",
-              "Role: what you personally owned end-to-end.",
-              "Outcome: a metric or a tangible result."
-            ],
-            links: [
-              { label: "Writeup", href: "#" },
-              { label: "Demo", href: "#" }
-            ]
-          },
-          {
-            title: "Project 2 - Public artifact",
-            meta: "Repo | Reproducible",
-            summary: "One sentence about what it shows and why it matters.",
-            bullets: [
-              "Tech: ...",
-              "Role: ...",
-              "Outcome: ..."
-            ],
-            links: [
-              { label: "Repo", href: "#" }
-            ]
-          }
+<script>
+/* ==================================================================
+   ✏️  EDIT HERE — All content lives in this single object.
+   Each person has: id, name, tagline, overview, projects, links, contact.
+   Just edit the values below; the page rebuilds automatically.
+   ================================================================== */
+const PEOPLE = [
+  {
+    id: "rafael",
+    name: "Rafael Lima Araujo Rego",
+    // Short text shown on the landing card
+    cardBlurb: "Engineering & product",
+    // Hero section
+    tagline: "Building tools that make complex systems simple.",
+    // Overview section — supports multiple paragraphs (array of strings)
+    overview: [
+      "I'm a product-minded engineer who thrives at the intersection of data infrastructure and user experience. Over the past few years I've shipped end-to-end systems that range from real-time analytics pipelines to consumer-facing web applications.",
+      "I care deeply about craft: clean APIs, thoughtful abstractions, and products that feel effortless to use."
+    ],
+    // Project cards
+    projects: [
+      {
+        title: "Real-Time Analytics Platform",
+        summary: "Scalable event processing pipeline serving millions of daily queries.",
+        bullets: [
+          "Designed ingestion layer handling 50k events/sec with sub-second latency",
+          "Built interactive dashboard consumed by 200+ internal users",
+          "Reduced infrastructure cost by 40% through query optimization"
         ],
-        topLinks: [
-          { label: "LinkedIn", href: "#" },
-          { label: "GitHub", href: "#" },
-          { label: "Email", href: "mailto:you@example.com" }
-        ],
-        proofText:
-          "Put links that increase trust: a writeup, a demo, a repo, a slide deck. Keep it short.",
-        proofLinks: [
-          { label: "Sanitized writeup (PDF)", href: "#" },
-          { label: "Demo video", href: "#" },
-          { label: "Public repo", href: "#" }
-        ],
-        contactText:
-          "Best way to reach me. If you want, add timezone and typical response time.",
-        contactLinks: [
-          { label: "Email", href: "mailto:you@example.com" },
-          { label: "LinkedIn DM", href: "#" }
+        buttons: [
+          // { label: "Writeup", url: "#" },
+          // { label: "Demo", url: "#" },
         ]
       },
+      {
+        title: "Developer Portal",
+        summary: "Self-serve onboarding experience for a B2B API product.",
+        bullets: [
+          "Implemented OAuth 2.0 flow and interactive API explorer",
+          "Cut median onboarding time from 3 days to 45 minutes",
+          "Designed component library used across 4 internal teams"
+        ],
+        buttons: [
+          // { label: "Repo", url: "#" },
+        ]
+      },
+      {
+        title: "Supply-Chain Optimization Engine",
+        summary: "ML-assisted demand forecasting integrated into ERP workflow.",
+        bullets: [
+          "Collaborated with data science team on feature engineering",
+          "Built REST API and monitoring dashboard for model outputs",
+          "Improved forecast accuracy by 18% vs. prior heuristic approach"
+        ],
+        buttons: []
+      }
+    ],
+    // Confidential work note (set to "" to hide)
+    ndaNote: "Some past work is under NDA; project summaries above have been sanitized accordingly.",
+    // External links / proof
+    links: [
+      { label: "GitHub", url: "https://github.com/" },
+      { label: "LinkedIn", url: "https://linkedin.com/" },
+      // { label: "Blog", url: "#" },
+    ],
+    // Contact
+    email: "rafael@example.com",
+    contactNote: "Open to interesting conversations — feel free to reach out."
+  },
 
-      iker: {
-        name: "Iker Alday Bonilla",
-        tagline: "Engineering and product. Execution heavy. Europe to SF.",
-        chips: ["Engineering", "Product", "Systems", "Shipping", "Speed"],
-        overview:
-          "Write 4 to 6 lines here. Emphasize what you build, how you execute, and the kinds of systems/products you have shipped.",
-        projectsIntro:
-          "Selected work designed to read like a product page, not a CV.",
-        ndaNote:
-          "Some work is under NDA. Summaries are sanitized; details can be discussed privately.",
-        projects: [
-          {
-            title: "Project 1 - Product / system",
-            meta: "Backend | Frontend",
-            summary: "One sentence describing what it is and who it helps.",
-            bullets: [
-              "Tech: ...",
-              "Role: ...",
-              "Outcome: ..."
-            ],
-            links: [
-              { label: "Writeup", href: "#" },
-              { label: "Demo", href: "#" }
-            ]
-          },
-          {
-            title: "Project 2 - Automation / tooling",
-            meta: "Ops | Speed",
-            summary: "One sentence about the operational impact.",
-            bullets: [
-              "Tech: ...",
-              "Role: ...",
-              "Outcome: ..."
-            ],
-            links: [
-              { label: "Repo", href: "#" }
-            ]
-          }
+  {
+    id: "iker",
+    name: "Iker Alday Bonilla",
+    cardBlurb: "Strategy & technology",
+    tagline: "Turning ambitious ideas into shipped products.",
+    overview: [
+      "I'm a technologist and strategist with a background spanning software engineering, product management, and early-stage ventures. I like working on hard problems where technical depth meets business impact.",
+      "My recent focus has been on applied AI systems and the tooling ecosystems around them."
+    ],
+    projects: [
+      {
+        title: "Conversational AI Agent",
+        summary: "Multi-turn assistant for enterprise knowledge management.",
+        bullets: [
+          "Architected retrieval-augmented generation (RAG) pipeline over 1M+ documents",
+          "Built evaluation harness that improved answer accuracy by 25%",
+          "Shipped to production serving 5k daily active users"
         ],
-        topLinks: [
-          { label: "LinkedIn", href: "#" },
-          { label: "GitHub", href: "#" },
-          { label: "Email", href: "mailto:you@example.com" }
+        buttons: [
+          // { label: "Demo", url: "#" },
+        ]
+      },
+      {
+        title: "Fintech Payments Integration",
+        summary: "Unified API layer connecting multiple payment processors.",
+        bullets: [
+          "Abstracted provider-specific quirks behind a clean, typed interface",
+          "Achieved 99.97% uptime over first 12 months",
+          "Processed $8M+ in transactions during beta period"
         ],
-        proofText:
-          "Put the 2 to 4 links that best prove you can ship.",
-        proofLinks: [
-          { label: "Demo", href: "#" },
-          { label: "Repo", href: "#" }
+        buttons: []
+      },
+      {
+        title: "Open-Source CLI Toolkit",
+        summary: "Developer productivity tool for monorepo management.",
+        bullets: [
+          "700+ GitHub stars; adopted by 3 companies internally",
+          "Written in Rust for fast cold-start execution",
+          "Comprehensive test suite with >90% coverage"
         ],
-        contactText:
-          "Best way to reach me.",
-        contactLinks: [
-          { label: "Email", href: "mailto:you@example.com" },
-          { label: "LinkedIn DM", href: "#" }
+        buttons: [
+          // { label: "Repo", url: "#" },
         ]
       }
-    };
+    ],
+    ndaNote: "Some work is under NDA; summaries are sanitized.",
+    links: [
+      { label: "GitHub", url: "https://github.com/" },
+      { label: "LinkedIn", url: "https://linkedin.com/" },
+    ],
+    email: "iker@example.com",
+    contactNote: "Always happy to connect — drop me a line."
+  }
+];
+/* ✏️  END EDITABLE CONTENT
+   ================================================================== */
 
-    /* =========================
-       Rendering + navigation
-       ========================= */
-    const els = {
-      body: document.body,
-      home: document.getElementById("home"),
-      profile: document.getElementById("profile"),
-      pName: document.getElementById("pName"),
-      pTagline: document.getElementById("pTagline"),
-      pChips: document.getElementById("pChips"),
-      pLinks: document.getElementById("pLinks"),
-      pOverview: document.getElementById("pOverview"),
-      pProjectsIntro: document.getElementById("pProjectsIntro"),
-      pProjectCards: document.getElementById("pProjectCards"),
-      pNdaNote: document.getElementById("pNdaNote"),
-      pProofText: document.getElementById("pProofText"),
-      pProofLinks: document.getElementById("pProofLinks"),
-      pContactText: document.getElementById("pContactText"),
-      pContactLinks: document.getElementById("pContactLinks"),
-      backBtn: document.getElementById("backBtn"),
-      copyLinkBtn: document.getElementById("copyLinkBtn"),
-      nav: document.getElementById("nav"),
-    };
 
-    let current = null;
+// ---- Render helpers ----
+function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
 
-    function el(tag, attrs = {}, children = []) {
-      const node = document.createElement(tag);
-      Object.entries(attrs).forEach(([k, v]) => {
-        if (k === "class") node.className = v;
-        else if (k === "text") node.textContent = v;
-        else node.setAttribute(k, v);
-      });
-      children.forEach(c => node.appendChild(typeof c === "string" ? document.createTextNode(c) : c));
-      return node;
-    }
+function renderLanding() {
+  const container = document.getElementById("nameCards");
+  container.innerHTML = PEOPLE.map(p => `
+    <div class="name-card" onclick="showPerson('${p.id}')">
+      <h2>${esc(p.name)}</h2>
+      <p>${esc(p.cardBlurb)}</p>
+    </div>
+  `).join("");
+}
 
-    function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+function renderPages() {
+  const container = document.getElementById("pages");
+  container.innerHTML = PEOPLE.map(p => `
+    <div class="person-page" id="page-${p.id}">
+      <!-- Sticky Nav -->
+      <nav class="sticky-nav">
+        <div class="sticky-nav-inner">
+          <span class="nav-back" onclick="goBack()">&#8592; Back</span>
+          <div class="nav-links">
+            <a href="#${p.id}-overview">Overview</a>
+            <a href="#${p.id}-projects">Projects</a>
+            <a href="#${p.id}-links">Links</a>
+            <a href="#${p.id}-contact">Contact</a>
+          </div>
+        </div>
+      </nav>
 
-    function renderPerson(key) {
-      const p = DATA[key];
-      if (!p) return;
+      <!-- Hero -->
+      <div class="hero">
+        <h1>${esc(p.name)}</h1>
+        <p class="tagline">${esc(p.tagline)}</p>
+      </div>
 
-      current = key;
+      <hr class="divider">
 
-      els.pName.textContent = p.name;
-      els.pTagline.textContent = p.tagline;
+      <!-- Overview -->
+      <section class="section" id="${p.id}-overview">
+        <h2>Overview</h2>
+        ${p.overview.map(para => `<p>${esc(para)}</p><br>`).join("")}
+      </section>
 
-      clear(els.pChips);
-      p.chips.forEach(t => els.pChips.appendChild(el("span", { class: "chip", text: t })));
+      <hr class="divider">
 
-      clear(els.pLinks);
-      p.topLinks.forEach(l => {
-        els.pLinks.appendChild(el("a", { class: "chip", href: l.href, target: "_blank", rel: "noopener", text: l.label }));
-      });
+      <!-- Projects -->
+      <section class="section" id="${p.id}-projects">
+        <h2>Selected Projects</h2>
+        <div class="projects-grid">
+          ${p.projects.map(proj => `
+            <div class="project-card">
+              <h3>${esc(proj.title)}</h3>
+              <p class="summary">${esc(proj.summary)}</p>
+              <ul>${proj.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>
+              ${proj.buttons.length ? `<div class="card-buttons">${proj.buttons.map(b =>
+                `<a class="btn-sm" href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.label)}</a>`
+              ).join("")}</div>` : ""}
+            </div>
+          `).join("")}
+        </div>
+        ${p.ndaNote ? `<p class="nda-note">${esc(p.ndaNote)}</p>` : ""}
+      </section>
 
-      els.pOverview.textContent = p.overview;
-      els.pProjectsIntro.textContent = p.projectsIntro;
-      els.pNdaNote.textContent = p.ndaNote;
+      <hr class="divider">
 
-      clear(els.pProjectCards);
-      p.projects.forEach(pr => {
-        const actions = el("div", { class: "card-actions" });
-        (pr.links || []).forEach(link => {
-          actions.appendChild(el("a", { class: "pill", href: link.href, target: "_blank", rel: "noopener", text: link.label }));
-        });
+      <!-- Links -->
+      <section class="section" id="${p.id}-links">
+        <h2>Proof &amp; Links</h2>
+        <div class="links-grid">
+          ${p.links.map(l => `
+            <a class="link-btn" href="${esc(l.url)}" target="_blank" rel="noopener">
+              ${esc(l.label)} <span class="arrow">&#8599;</span>
+            </a>
+          `).join("")}
+        </div>
+      </section>
 
-        const ul = el("ul");
-        (pr.bullets || []).forEach(b => ul.appendChild(el("li", { text: b })));
+      <hr class="divider">
 
-        els.pProjectCards.appendChild(
-          el("div", { class: "card" }, [
-            el("div", { class: "card-title" }, [
-              el("strong", { text: pr.title }),
-              el("span", { text: pr.meta || "" })
-            ]),
-            el("p", { text: pr.summary || "" }),
-            ul,
-            actions
-          ])
-        );
-      });
+      <!-- Contact -->
+      <section class="section" id="${p.id}-contact">
+        <h2>Contact</h2>
+        <div class="contact-content">
+          <a class="email-link" href="mailto:${esc(p.email)}">${esc(p.email)}</a>
+          ${p.contactNote ? `<p>${esc(p.contactNote)}</p>` : ""}
+        </div>
+      </section>
 
-      els.pProofText.textContent = p.proofText;
-      clear(els.pProofLinks);
-      p.proofLinks.forEach(l => {
-        els.pProofLinks.appendChild(el("a", { class: "pill", href: l.href, target: "_blank", rel: "noopener", text: l.label }));
-      });
+      <div class="person-footer">&copy; ${new Date().getFullYear()}</div>
+    </div>
+  `).join("");
+}
 
-      els.pContactText.textContent = p.contactText;
-      clear(els.pContactLinks);
-      p.contactLinks.forEach(l => {
-        els.pContactLinks.appendChild(el("a", { class: "pill", href: l.href, target: "_blank", rel: "noopener", text: l.label }));
-      });
-    }
+// ---- Navigation ----
+function showPerson(id) {
+  document.getElementById("landing").classList.add("hidden");
+  document.querySelectorAll(".person-page").forEach(p => p.classList.remove("active"));
+  const page = document.getElementById("page-" + id);
+  if (page) { page.classList.add("active"); }
+  window.location.hash = id;
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
 
-    function showHome(pushHash = true) {
-      current = null;
-      els.body.classList.remove("mode-profile");
-      els.body.classList.add("mode-home");
+function goBack() {
+  document.querySelectorAll(".person-page").forEach(p => p.classList.remove("active"));
+  document.getElementById("landing").classList.remove("hidden");
+  history.pushState(null, "", window.location.pathname);
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
 
-      els.profile.classList.remove("active");
-      els.home.style.display = "block";
+function handleHash() {
+  const hash = window.location.hash.replace("#", "").split("-")[0];
+  const match = PEOPLE.find(p => p.id === hash);
+  if (match) showPerson(match.id);
+}
 
-      els.backBtn.style.display = "none";
-      els.copyLinkBtn.style.display = "none";
-
-      if (pushHash) history.pushState(null, "", "#");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function showProfile(personKey, pushHash = true) {
-      renderPerson(personKey);
-
-      els.body.classList.remove("mode-home");
-      els.body.classList.add("mode-profile");
-
-      els.home.style.display = "none";
-      els.profile.classList.add("active");
-
-      els.backBtn.style.display = "inline-flex";
-      els.copyLinkBtn.style.display = "inline-flex";
-
-      if (pushHash) history.pushState(null, "", "#" + personKey);
-
-      // Land at top of profile hero
-      window.scrollTo({ top: els.profile.offsetTop - 10, behavior: "smooth" });
-      setActiveNav("overview");
-    }
-
-    function setActiveNav(which) {
-      const links = Array.from(els.nav.querySelectorAll("a[data-spy]"));
-      links.forEach(a => a.classList.toggle("active", a.getAttribute("data-spy") === which));
-    }
-
-    // Handle clicks on landing name buttons
-    document.querySelectorAll(".person-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const key = btn.getAttribute("data-person");
-        showProfile(key, true);
-      });
-    });
-
-    // Back button
-    els.backBtn.addEventListener("click", () => showHome(true));
-
-    // Copy direct profile link
-    els.copyLinkBtn.addEventListener("click", async () => {
-      const url = new URL(window.location.href);
-      if (current) url.hash = "#" + current;
-      try {
-        await navigator.clipboard.writeText(url.toString());
-        els.copyLinkBtn.textContent = "Copied";
-        setTimeout(() => (els.copyLinkBtn.textContent = "Copy link"), 900);
-      } catch (e) {
-        // fallback
-        prompt("Copy this link:", url.toString());
-      }
-    });
-
-    // Smooth scroll nav
-    els.nav.querySelectorAll("a[href^='#']").forEach(a => {
-      a.addEventListener("click", (ev) => {
-        ev.preventDefault();
-        const id = a.getAttribute("href").slice(1);
-        const target = document.getElementById(id);
-        if (!target) return;
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-
-    // Section spy for sticky nav
-    const spySections = ["overview", "projects", "proof", "contact"]
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
-
-    const io = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible && visible.target && visible.target.id) {
-        setActiveNav(visible.target.id);
-      }
-    }, { root: null, threshold: [0.22, 0.35, 0.5, 0.65] });
-
-    spySections.forEach(s => io.observe(s));
-
-    // Load based on hash
-    function syncFromHash() {
-      const h = (location.hash || "").replace("#", "").toLowerCase();
-      if (h === "rafael" || h === "iker") showProfile(h, false);
-      else showHome(false);
-    }
-
-    window.addEventListener("hashchange", syncFromHash);
-    syncFromHash();
-  </script>
+// ---- Init ----
+renderLanding();
+renderPages();
+handleHash();
+window.addEventListener("hashchange", handleHash);
+</script>
 </body>
 </html>
