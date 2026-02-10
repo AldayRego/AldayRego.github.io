@@ -53,12 +53,13 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-back {
   font-size: 0.875rem; color: #555; cursor: pointer; display: flex; align-items: center; gap: 6px;
-  transition: color 0.2s;
+  transition: color 0.2s; flex-shrink: 0;
 }
 .nav-back:hover { color: #000; }
 .nav-links { display: flex; gap: 1.5rem; }
 .nav-links a {
   font-size: 0.85rem; color: #555; transition: color 0.2s; font-weight: 500; letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 .nav-links a:hover { color: #000; }
 
@@ -67,7 +68,8 @@ a { color: inherit; text-decoration: none; }
   max-width: 720px; margin: 0 auto; padding: 6rem 2rem 4rem; text-align: center;
 }
 .hero h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
-.hero .tagline { font-size: 1.2rem; color: #555; max-width: 520px; margin: 0 auto; }
+.hero .tagline { font-size: 1.15rem; color: #555; max-width: 560px; margin: 0 auto; }
+.hero .info-note { font-size: 0.95rem; color: #777; margin-top: 0.75rem; }
 
 /* ========== SECTIONS ========== */
 .section {
@@ -78,13 +80,13 @@ a { color: inherit; text-decoration: none; }
   color: #999; margin-bottom: 2rem;
 }
 .section p { color: #444; font-size: 1rem; line-height: 1.75; }
-.section .nda-note {
+.section .section-note {
   font-size: 0.85rem; color: #999; font-style: italic; margin-top: 1rem;
   padding: 0.75rem 1rem; background: #fafafa; border-radius: 8px; border: 1px solid #f0f0f0;
 }
 .divider { max-width: 800px; margin: 0 auto; border: none; border-top: 1px solid #f0f0f0; }
 
-/* ========== PROJECT CARDS ========== */
+/* ========== PROJECT / ENTRY CARDS ========== */
 .projects-grid { display: grid; gap: 1.5rem; }
 .project-card {
   border: 1px solid #e8e8e8; border-radius: 12px; padding: 2rem;
@@ -92,6 +94,8 @@ a { color: inherit; text-decoration: none; }
 }
 .project-card:hover { border-color: #ccc; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
 .project-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.35rem; }
+.project-card .card-subtitle { font-size: 0.95rem; color: #555; margin-bottom: 0.25rem; font-weight: 500; }
+.project-card .card-meta { font-size: 0.82rem; color: #999; margin-bottom: 1rem; letter-spacing: 0.01em; }
 .project-card .summary { font-size: 0.95rem; color: #666; margin-bottom: 1rem; }
 .project-card ul { list-style: none; margin-bottom: 1.25rem; }
 .project-card ul li {
@@ -108,6 +112,20 @@ a { color: inherit; text-decoration: none; }
   transition: all 0.2s; display: inline-block;
 }
 .btn-sm:hover { border-color: #111; background: #111; color: #fff; }
+
+/* ========== SKILLS SECTION ========== */
+.skills-section { display: flex; flex-direction: column; gap: 1.5rem; }
+.skill-group-label {
+  font-size: 0.85rem; font-weight: 600; color: #888; text-transform: uppercase;
+  letter-spacing: 0.05em; display: block; margin-bottom: 0.5rem;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tag {
+  font-size: 0.85rem; padding: 0.35rem 0.85rem; background: #f5f5f5;
+  border-radius: 20px; color: #444; border: 1px solid #e8e8e8;
+  transition: background 0.2s, border-color 0.2s;
+}
+.skill-tag:hover { background: #eee; border-color: #ddd; }
 
 /* ========== PROOF / LINKS ========== */
 .links-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
@@ -127,6 +145,7 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: 2px; transition: border-color 0.2s;
 }
 .contact-content .email-link:hover { border-color: #111; }
+.contact-content .contact-phone { font-size: 0.95rem; color: #555; margin-top: 0.5rem; }
 .contact-content p { color: #777; margin-top: 0.75rem; font-size: 0.9rem; }
 
 /* ========== FOOTER ========== */
@@ -140,7 +159,8 @@ a { color: inherit; text-decoration: none; }
   .hero { padding: 4rem 1.5rem 3rem; }
   .section { padding: 3rem 1.5rem; }
   .name-card { width: 100%; max-width: 320px; }
-  .nav-links { gap: 1rem; }
+  .nav-links { gap: 1rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
   .nav-links a { font-size: 0.78rem; }
 }
 </style>
@@ -160,134 +180,406 @@ a { color: inherit; text-decoration: none; }
 
 <script>
 /* ==================================================================
-   ✏️  EDIT HERE — All content lives in this single object.
-   Each person has: id, name, tagline, overview, projects, links, contact.
-   Just edit the values below; the page rebuilds automatically.
+   DATA — All content lives in this single object.
+   Each person has: id, name, tagline, info, sections, links, contact.
+   Sections are rendered in order. Each section has a type:
+     - "cards"  → renders project-card style entries
+     - "skills" → renders skill tag groups
+   To add more projects later, just append cards to the relevant
+   section or add a new section object to the array.
    ================================================================== */
 const PEOPLE = [
   {
     id: "rafael",
     name: "Rafael Lima Araujo Rego",
-    // Short text shown on the landing card
-    cardBlurb: "Engineering & product",
-    // Hero section
-    tagline: "Building tools that make complex systems simple.",
-    // Overview section — supports multiple paragraphs (array of strings)
-    overview: [
-      "I'm a product-minded engineer who thrives at the intersection of data infrastructure and user experience. Over the past few years I've shipped end-to-end systems that range from real-time analytics pipelines to consumer-facing web applications.",
-      "I care deeply about craft: clean APIs, thoughtful abstractions, and products that feel effortless to use."
-    ],
-    // Project cards
-    projects: [
+    cardBlurb: "Econometrics & Operations Research",
+    tagline: "Double BSc in Econometrics & Operations Research and Economics",
+    info: "Nationalities: Brazilian, Italian | Lived in Rio de Janeiro and Munich; currently residing in Rotterdam",
+
+    sections: [
       {
-        title: "Real-Time Analytics Platform",
-        summary: "Scalable event processing pipeline serving millions of daily queries.",
-        bullets: [
-          "Designed ingestion layer handling 50k events/sec with sub-second latency",
-          "Built interactive dashboard consumed by 200+ internal users",
-          "Reduced infrastructure cost by 40% through query optimization"
-        ],
-        buttons: [
-          // { label: "Writeup", url: "#" },
-          // { label: "Demo", url: "#" },
+        id: "education",
+        title: "Education",
+        navLabel: "Education",
+        type: "cards",
+        cards: [
+          {
+            title: "Erasmus University Rotterdam",
+            subtitle: "Double Bachelor: BSc Econometrics and Operations Research; BSc Economics",
+            meta: "Rotterdam, Netherlands | Expected Graduation: Aug 2026",
+            bullets: [
+              "Cumulative GPA: 8.75/10 (cum laude threshold is 8.25/10)",
+              "Second-year & Third-year GPA: 9.1/10 & 8.99/10 (summa cum laude threshold is 9/10)",
+              "Honours Research Class: Invitation-only program for the best performing students across the Erasmus School of Economics faculty",
+              "Skills Acquired: Linear & Logistic Regressions, Probability Theory & Statistics, Multivariate Statistics, Finance, Accounting, Linear Algebra, Programming, Optimization Methods, Principal Component Analysis, Time Series Analysis, Stochastic Processes, Monte Carlo Simulations"
+            ],
+            buttons: []
+          },
+          {
+            title: "Delft University of Technology",
+            subtitle: "Minor Engineering with AI",
+            meta: "Delft, Netherlands | Sep 2025 \u2013 Jan 2026",
+            bullets: [
+              "Cumulative GPA (ML, NLP, and Python courses): 9.5/10",
+              "Skills Acquired: Machine Learning, Natural Language Processing, Deep Learning, Python"
+            ],
+            buttons: []
+          }
         ]
       },
+
       {
-        title: "Developer Portal",
-        summary: "Self-serve onboarding experience for a B2B API product.",
-        bullets: [
-          "Implemented OAuth 2.0 flow and interactive API explorer",
-          "Cut median onboarding time from 3 days to 45 minutes",
-          "Designed component library used across 4 internal teams"
-        ],
-        buttons: [
-          // { label: "Repo", url: "#" },
+        id: "experience",
+        title: "Relevant Work Experience",
+        navLabel: "Experience",
+        type: "cards",
+        cards: [
+          {
+            title: "Research Assistant",
+            subtitle: "Erasmus University Rotterdam",
+            meta: "Rotterdam, Netherlands | Part time | Sep 2025 \u2013 Present",
+            bullets: [
+              "Reproducing the collapsed dynamic factor model of Br\u00e4uning & Koopman (2014) in state-space form by developing a Kalman filter and Monte Carlo simulation framework in Python and validating the implementation against the original paper across multiple model specifications.",
+              "Working under Professor Dick van Dijk, Sam van Meer, and Daan Opschoor (Ortec Finance)."
+            ],
+            buttons: []
+          },
+          {
+            title: "Working Student \u2014 Digital Infrastructure Team, Corporate Banking Division",
+            subtitle: "NIBC Bank",
+            meta: "The Hague, Netherlands | Part time | Feb 2025 \u2013 Aug 2025",
+            bullets: [
+              "Lowered aggregate capital requirements by millions of euros (~24% per qualifying exposure) by leading a portfolio-wide review of corporate debt exposures to implement the SME supporting factor under EU CRR. Independently navigated complex regulatory rules and corporate structures, identifying 10+ qualifying exposures. Pitched and secured buy-in from Risk and Corporate Banking MDs and established the SME Factor check as a permanent feature of the credit review process, leading training sessions for teams across global offices.",
+              "Independently saved the bank thousands in consultant fees by restructuring the valuation of a complex equity case for an FX trading company. Produced and delivered a polished solution report to senior management, fully replacing the need for external consultants.",
+              "Supported periodic credit reviews for corporate clients in the fiber infrastructure and data center sectors by preparing financial analyses and assessing credit risk exposures within the bank\u2019s portfolio. Automated and standardized processes that spared the team 3+ hours per new deal."
+            ],
+            buttons: []
+          },
+          {
+            title: "Working Student \u2014 Credit Risk Modelling & Data Analytics Team, Risk Division",
+            subtitle: "NIBC Bank",
+            meta: "The Hague, Netherlands | Part time (internal rotation under same contract) | Jul 2025 \u2013 Aug 2025",
+            bullets: [
+              "Worked directly in the bank\u2019s Python codebase and was responsible for implementing Basel IV driven updates to the Probability of Default (PD) model for the Digital Infrastructure and Commercial Real Estate portfolios, used in regulatory stress testing.",
+              "Reviewed and refined model assumptions, drawing on concepts from the Vasicek distribution and Belkin model."
+            ],
+            buttons: []
+          },
+          {
+            title: "From Research Assistant to Co-Author of Academic Paper",
+            subtitle: "Erasmus University Rotterdam",
+            meta: "Rotterdam, Netherlands | Part time (Honours Research Class; unpaid internship for credit) | Aug 2024 \u2013 Aug 2025",
+            bullets: [
+              "Co-authored a paper (under submission to the Journal of Computational Science) with Professors Philip Hans Franses, Richard Paap, and Casper Keer, where we developed a misclassification-robust prediction model also capable of predicting misclassified observations.",
+              "Originated and tested a two-step method that made the probability of misclassification dependent on explanatory variables, deriving the mathematics, adapting the EM-style estimator, and testing on large churn datasets in Python. This approach identified variable combinations disproportionately linked to misclassified cases and shaped the paper\u2019s final methodology by motivating the one-step LASSO extension."
+            ],
+            buttons: []
+          },
+          {
+            title: "Teaching Assistant \u2014 Non-linear Optimization & Statistics",
+            subtitle: "Erasmus University Rotterdam",
+            meta: "Rotterdam, Netherlands | Part time | Oct 2024 \u2013 Jan 2025 & Apr 2025 \u2013 Aug 2025",
+            bullets: [
+              "Taught two Non-linear Optimization tutorials in the second block 2024/25, planning and leading sessions for over 30 students in each class. Topics included: Gradient Descent, Newton\u2019s Methods, and Non-differentiable/Constrained/Convex Optimization.",
+              "Taught one Statistics tutorial in the fifth block 2024/25, planning and leading a class of 25 students. Topics included: Fundamentals of Estimators (MLE & MME), Asymptotic Theory (CLT & LLN), Sufficient Statistics, and Optimal Hypothesis Testing.",
+              "Received excellent feedback from students for communicating complex theory in a clear and intuitive way."
+            ],
+            buttons: []
+          }
         ]
       },
+
       {
-        title: "Supply-Chain Optimization Engine",
-        summary: "ML-assisted demand forecasting integrated into ERP workflow.",
-        bullets: [
-          "Collaborated with data science team on feature engineering",
-          "Built REST API and monitoring dashboard for model outputs",
-          "Improved forecast accuracy by 18% vs. prior heuristic approach"
-        ],
-        buttons: []
+        id: "competitions",
+        title: "Competitions & Awards",
+        navLabel: "Awards",
+        type: "cards",
+        cards: [
+          {
+            title: "IMC Prosperity 3 \u2014 Algorithmic Trading Competition",
+            subtitle: "6th Best Student Manual Trader in the World",
+            meta: "",
+            bullets: [
+              "Ranked 6th globally in the student manual trading category and 1st in the Netherlands out of 12,621 teams. Placed in the top 1.3% overall (manual and algorithmic combined) in our first year competing.",
+              "Developed and back-tested strategies for market-making and ETF arbitrage. Extended Python backtester with parameter optimization. In manual trading, modeled and solved market optimization problems using game-theoretic predictions of competitor behavior and auction theory to estimate optimal trading strategies."
+            ],
+            buttons: []
+          },
+          {
+            title: "Turing Students Rotterdam\u2019s Datathon",
+            subtitle: "1st Place",
+            meta: "",
+            bullets: [
+              "Won 1st place by developing and deploying the most accurate ML predictive algorithm for Olympic medal outcomes, after a day of building data pipelines, testing models, and delivering a final presentation."
+            ],
+            buttons: []
+          }
+        ]
+      },
+
+      {
+        id: "skills",
+        title: "Languages & Computer Skills",
+        navLabel: "Skills",
+        type: "skills",
+        skillGroups: [
+          { label: "Languages", items: ["Portuguese (Native)", "English (Fluent)", "German (Advanced)"] },
+          { label: "Programming", items: ["Java (Proficient)", "Python (Proficient)", "MATLAB (Intermediate)", "R (Intermediate)", "Excel (Intermediate)"] },
+          { label: "Python Libraries", items: ["NumPy", "Pandas", "PyTorch", "Backtrader", "YFinance", "Statsmodels", "Scipy", "Optuna (Optimization)", "Gurobipy (MIP)"] }
+        ]
+      },
+
+      {
+        id: "extracurricular",
+        title: "Extracurricular",
+        navLabel: "Extra",
+        showInNav: false,
+        type: "cards",
+        cards: [
+          {
+            title: "Sneaker Retail Solo Entrepreneurship",
+            subtitle: "",
+            meta: "Oct 2019 \u2013 Sep 2021",
+            bullets: [
+              "Resold sneakers via WhatsApp and Instagram; started with R$ 1,500 (~$340).",
+              "Achieved an average yearly revenue of R$ 101,208 (~$23,000) and yearly profit of R$ 14,148 (~$3,215)."
+            ],
+            buttons: []
+          },
+          {
+            title: "Volunteer Math Teacher",
+            subtitle: "Casa Santa Ignez",
+            meta: "Mar 2017 \u2013 Oct 2017",
+            bullets: [
+              "Weekly visits to public school Casa Santa Ignez. Helped the kids learn how to read and do math during class. Tried to incentivize curiosity and first-principles thinking."
+            ],
+            buttons: []
+          },
+          {
+            title: "Oakberry A\u00e7a\u00ed",
+            subtitle: "",
+            meta: "Aug 2024 \u2013 Nov 2024",
+            bullets: [
+              "Independently managed daily operations of the Oakberry A\u00e7a\u00ed kiosk, consistently serving 100+ customers per day in a fast-paced environment while handling transactions and maintaining inventory."
+            ],
+            buttons: []
+          },
+          {
+            title: "Interests",
+            subtitle: "",
+            meta: "",
+            bullets: [
+              "Competitive Texas Hold\u2019em Poker Player, Self-Taught Chef."
+            ],
+            buttons: []
+          }
+        ]
       }
     ],
-    // Confidential work note (set to "" to hide)
-    ndaNote: "Some past work is under NDA; project summaries above have been sanitized accordingly.",
-    // External links / proof
+
     links: [
-      { label: "GitHub", url: "https://github.com/" },
-      { label: "LinkedIn", url: "https://linkedin.com/" },
-      // { label: "Blog", url: "#" },
+      { label: "LinkedIn", url: "https://www.linkedin.com/in/rafaelarego" }
     ],
-    // Contact
-    email: "rafael@example.com",
-    contactNote: "Open to interesting conversations — feel free to reach out."
+    email: "rafael.rego@icloud.com",
+    phone: "+55 21 998001302 | +31 6 35632378",
+    contactNote: "Open to interesting conversations \u2014 feel free to reach out."
   },
 
   {
     id: "iker",
     name: "Iker Alday Bonilla",
-    cardBlurb: "Strategy & technology",
-    tagline: "Turning ambitious ideas into shipped products.",
-    overview: [
-      "I'm a technologist and strategist with a background spanning software engineering, product management, and early-stage ventures. I like working on hard problems where technical depth meets business impact.",
-      "My recent focus has been on applied AI systems and the tooling ecosystems around them."
-    ],
-    projects: [
+    cardBlurb: "Econometrics & Economics",
+    tagline: "Double BSc\u00b2 in Econometrics and Economics",
+    info: "",
+
+    sections: [
       {
-        title: "Conversational AI Agent",
-        summary: "Multi-turn assistant for enterprise knowledge management.",
-        bullets: [
-          "Architected retrieval-augmented generation (RAG) pipeline over 1M+ documents",
-          "Built evaluation harness that improved answer accuracy by 25%",
-          "Shipped to production serving 5k daily active users"
-        ],
-        buttons: [
-          // { label: "Demo", url: "#" },
+        id: "education",
+        title: "Education",
+        navLabel: "Education",
+        type: "cards",
+        cards: [
+          {
+            title: "Erasmus Universiteit Rotterdam",
+            subtitle: "Double Bachelor BSc\u00b2 in Econometrics and Economics",
+            meta: "Rotterdam, Netherlands | Class of 2026",
+            bullets: [
+              "Cumulative GPA: 8.32/10 \u2014 Cum Laude (honours) (1st year = 7.79, 2nd year = 8.39, 3rd year = 8.64)",
+              "FAECTOR Excellence Programme: Programme for top \u201cacademically high-performing students in Econometrics\u201d centred on exploring how to apply econometrics on to geopolitics."
+            ],
+            buttons: []
+          }
         ]
       },
+
       {
-        title: "Fintech Payments Integration",
-        summary: "Unified API layer connecting multiple payment processors.",
-        bullets: [
-          "Abstracted provider-specific quirks behind a clean, typed interface",
-          "Achieved 99.97% uptime over first 12 months",
-          "Processed $8M+ in transactions during beta period"
-        ],
-        buttons: []
+        id: "experience",
+        title: "Work Experience",
+        navLabel: "Experience",
+        type: "cards",
+        cards: [
+          {
+            title: "Working Student Analyst \u2014 Digital Infrastructure Team",
+            subtitle: "NIBC Bank N.V. (transitioning to ABN AMRO)",
+            meta: "The Hague, Netherlands | Part-time | August 2025 \u2013 Dec. 2025",
+            bullets: [
+              "Contributed to regular credit reviews for data centre and fiber clients by analysing financials and credit exposures across the portfolio.",
+              "Improved several internal workflows used when looking into the effect of a new deal on the credit exposure.",
+              "Stepped in to finalise and lead a corporate debt portfolio review, achieving reductions of millions of euros in capital requirements (around 24% per qualifying exposure)."
+            ],
+            buttons: []
+          },
+          {
+            title: "Research Assistant",
+            subtitle: "Erasmus School of Economics",
+            meta: "Rotterdam, Netherlands | Part-time | May 2025 \u2013",
+            bullets: [
+              "Assisting Professor Annika Camehl on a research project that combines macro-level structural VARs with micro-level methods. Contributed to replicating related literature, estimating and simulating model parameters in MATLAB, and helping address identification issues in the likelihood function."
+            ],
+            buttons: []
+          },
+          {
+            title: "Part-Time Student Consultant \u2014 Reinforcement Learning Team",
+            subtitle: "SkillMix",
+            meta: "Rotterdam, Netherlands | Part-time | April 2025 \u2013",
+            bullets: [
+              "Developing a smart traffic-light prototype that uses dynamic signal-timing optimization.",
+              "First prototype completed and currently in discussions with ERTICO, who are actively searching for a consortium for us to join.",
+              "Applying reinforcement learning (DDQN) alongside more standard linear-optimization algorithms (benchmark) for real-time timing adjustments."
+            ],
+            buttons: []
+          },
+          {
+            title: "Part-Time Trading Strategy Backtester",
+            subtitle: "IU Capital",
+            meta: "(Remote) Orlando, Florida | Part-time | June 2025 \u2013 Sept. 2025",
+            bullets: [
+              "Backtested, optimised, and live-tested systematic strategies across equities, ETFs, and crypto.",
+              "Learned practical constraints of live trading: exchange-specific microstructure, latency, fee effects, amongst others."
+            ],
+            buttons: []
+          }
+        ]
       },
+
       {
-        title: "Open-Source CLI Toolkit",
-        summary: "Developer productivity tool for monorepo management.",
-        bullets: [
-          "700+ GitHub stars; adopted by 3 companies internally",
-          "Written in Rust for fast cold-start execution",
-          "Comprehensive test suite with >90% coverage"
-        ],
-        buttons: [
-          // { label: "Repo", url: "#" },
+        id: "projects",
+        title: "Data Analytics & Finance Projects",
+        navLabel: "Projects",
+        type: "cards",
+        cards: [
+          {
+            title: "Using Machine Learning to Adjust Mammography Time Intervals for Breast Cancer Screening",
+            subtitle: "Medicine Research Paper \u2014 UAM Faculty of Medicine",
+            meta: "May \u2013 June 2024",
+            bullets: [
+              "Collaborated with a 6th-year medicine student to develop the research paper contributing in the machine learning aspect of the project.",
+              "Presented at the congress \u201cCongreso SESPM\u201d."
+            ],
+            buttons: [
+              // { label: "Paper", url: "#" },
+              // { label: "Congress Poster", url: "#" },
+            ]
+          },
+          {
+            title: "Options Pricing Research Project (In progress)",
+            subtitle: "Assessing the Accuracy Gains of the Heston Model Over the Black-Scholes Merton Model in Pricing European Call Options: A Comparative Study on Utility and Technology Stocks",
+            meta: "September 2024 \u2013",
+            bullets: [],
+            buttons: [
+              // { label: "Paper (in progress)", url: "#" },
+            ]
+          }
+        ]
+      },
+
+      {
+        id: "competitions",
+        title: "Competitions & Awards",
+        navLabel: "Awards",
+        type: "cards",
+        cards: [
+          {
+            title: "IMC Prosperity 2025 \u2014 Algorithmic Trading Competition",
+            subtitle: "6th Best Student Manual Traders Worldwide (1st in the Netherlands)",
+            meta: "",
+            bullets: [
+              "Top 1.3% in the overall competition out of 12,621 teams."
+            ],
+            buttons: []
+          },
+          {
+            title: "Turing Students Rotterdam\u2019s Datathon",
+            subtitle: "1st Place",
+            meta: "",
+            bullets: [
+              "Our challenge? To develop and deploy the most effective ML system using a comprehensive Olympics dataset."
+            ],
+            buttons: []
+          }
         ]
       }
     ],
-    ndaNote: "Some work is under NDA; summaries are sanitized.",
-    links: [
-      { label: "GitHub", url: "https://github.com/" },
-      { label: "LinkedIn", url: "https://linkedin.com/" },
-    ],
-    email: "iker@example.com",
-    contactNote: "Always happy to connect — drop me a line."
+
+    links: [],
+    email: "ikeraldayb@gmail.com",
+    phone: "+34 699 468682",
+    contactNote: "Always happy to connect \u2014 drop me a line."
   }
 ];
-/* ✏️  END EDITABLE CONTENT
+/* END EDITABLE CONTENT
    ================================================================== */
 
 
 // ---- Render helpers ----
 function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+function renderCard(card) {
+  return `
+    <div class="project-card">
+      <h3>${esc(card.title)}</h3>
+      ${card.subtitle ? `<p class="card-subtitle">${esc(card.subtitle)}</p>` : ""}
+      ${card.meta ? `<p class="card-meta">${esc(card.meta)}</p>` : ""}
+      ${card.bullets && card.bullets.length ? `<ul>${card.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
+      ${card.buttons && card.buttons.length ? `<div class="card-buttons">${card.buttons.map(b =>
+        `<a class="btn-sm" href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.label)}</a>`
+      ).join("")}</div>` : ""}
+    </div>
+  `;
+}
+
+function renderSection(p, s) {
+  let content = "";
+
+  if (s.type === "cards") {
+    content = `
+      <div class="projects-grid">
+        ${s.cards.map(c => renderCard(c)).join("")}
+      </div>
+      ${s.note ? `<p class="section-note">${esc(s.note)}</p>` : ""}
+    `;
+  } else if (s.type === "skills") {
+    content = `
+      <div class="skills-section">
+        ${s.skillGroups.map(g => `
+          <div class="skill-group">
+            <span class="skill-group-label">${esc(g.label)}</span>
+            <div class="skill-tags">
+              ${g.items.map(i => `<span class="skill-tag">${esc(i)}</span>`).join("")}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  return `
+    <section class="section" id="${p.id}-${s.id}">
+      <h2>${esc(s.title)}</h2>
+      ${content}
+    </section>
+  `;
+}
 
 function renderLanding() {
   const container = document.getElementById("nameCards");
@@ -301,60 +593,19 @@ function renderLanding() {
 
 function renderPages() {
   const container = document.getElementById("pages");
-  container.innerHTML = PEOPLE.map(p => `
-    <div class="person-page" id="page-${p.id}">
-      <!-- Sticky Nav -->
-      <nav class="sticky-nav">
-        <div class="sticky-nav-inner">
-          <span class="nav-back" onclick="goBack()">&#8592; Back</span>
-          <div class="nav-links">
-            <a href="#${p.id}-overview">Overview</a>
-            <a href="#${p.id}-projects">Projects</a>
-            <a href="#${p.id}-links">Links</a>
-            <a href="#${p.id}-contact">Contact</a>
-          </div>
-        </div>
-      </nav>
+  container.innerHTML = PEOPLE.map(p => {
+    const navItems = p.sections
+      .filter(s => s.showInNav !== false)
+      .map(s => `<a href="#${p.id}-${s.id}">${esc(s.navLabel || s.title)}</a>`)
+      .join("");
 
-      <!-- Hero -->
-      <div class="hero">
-        <h1>${esc(p.name)}</h1>
-        <p class="tagline">${esc(p.tagline)}</p>
-      </div>
+    const sectionsHtml = p.sections.map(s =>
+      renderSection(p, s) + '<hr class="divider">'
+    ).join("");
 
-      <hr class="divider">
-
-      <!-- Overview -->
-      <section class="section" id="${p.id}-overview">
-        <h2>Overview</h2>
-        ${p.overview.map(para => `<p>${esc(para)}</p><br>`).join("")}
-      </section>
-
-      <hr class="divider">
-
-      <!-- Projects -->
-      <section class="section" id="${p.id}-projects">
-        <h2>Selected Projects</h2>
-        <div class="projects-grid">
-          ${p.projects.map(proj => `
-            <div class="project-card">
-              <h3>${esc(proj.title)}</h3>
-              <p class="summary">${esc(proj.summary)}</p>
-              <ul>${proj.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>
-              ${proj.buttons.length ? `<div class="card-buttons">${proj.buttons.map(b =>
-                `<a class="btn-sm" href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.label)}</a>`
-              ).join("")}</div>` : ""}
-            </div>
-          `).join("")}
-        </div>
-        ${p.ndaNote ? `<p class="nda-note">${esc(p.ndaNote)}</p>` : ""}
-      </section>
-
-      <hr class="divider">
-
-      <!-- Links -->
+    const linksSection = p.links && p.links.length ? `
       <section class="section" id="${p.id}-links">
-        <h2>Proof &amp; Links</h2>
+        <h2>Links</h2>
         <div class="links-grid">
           ${p.links.map(l => `
             <a class="link-btn" href="${esc(l.url)}" target="_blank" rel="noopener">
@@ -363,21 +614,50 @@ function renderPages() {
           `).join("")}
         </div>
       </section>
-
       <hr class="divider">
+    ` : "";
 
-      <!-- Contact -->
-      <section class="section" id="${p.id}-contact">
-        <h2>Contact</h2>
-        <div class="contact-content">
-          <a class="email-link" href="mailto:${esc(p.email)}">${esc(p.email)}</a>
-          ${p.contactNote ? `<p>${esc(p.contactNote)}</p>` : ""}
+    return `
+      <div class="person-page" id="page-${p.id}">
+        <!-- Sticky Nav -->
+        <nav class="sticky-nav">
+          <div class="sticky-nav-inner">
+            <span class="nav-back" onclick="goBack()">&#8592; Back</span>
+            <div class="nav-links">
+              ${navItems}
+              ${p.links && p.links.length ? `<a href="#${p.id}-links">Links</a>` : ""}
+              <a href="#${p.id}-contact">Contact</a>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Hero -->
+        <div class="hero">
+          <h1>${esc(p.name)}</h1>
+          <p class="tagline">${esc(p.tagline)}</p>
+          ${p.info ? `<p class="info-note">${esc(p.info)}</p>` : ""}
         </div>
-      </section>
 
-      <div class="person-footer">&copy; ${new Date().getFullYear()}</div>
-    </div>
-  `).join("");
+        <hr class="divider">
+
+        ${sectionsHtml}
+
+        ${linksSection}
+
+        <!-- Contact -->
+        <section class="section" id="${p.id}-contact">
+          <h2>Contact</h2>
+          <div class="contact-content">
+            <a class="email-link" href="mailto:${esc(p.email)}">${esc(p.email)}</a>
+            ${p.phone ? `<p class="contact-phone">${esc(p.phone)}</p>` : ""}
+            ${p.contactNote ? `<p>${esc(p.contactNote)}</p>` : ""}
+          </div>
+        </section>
+
+        <div class="person-footer">&copy; ${new Date().getFullYear()}</div>
+      </div>
+    `;
+  }).join("");
 }
 
 // ---- Navigation ----
