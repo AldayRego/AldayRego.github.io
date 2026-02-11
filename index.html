@@ -688,12 +688,12 @@ function renderPages() {
 }
 
 // ---- Navigation ----
-function showPerson(id) {
+function showPerson(id, shouldScrollTop = true) {
   document.getElementById("landing").classList.add("hidden");
   document.querySelectorAll(".person-page").forEach(p => p.classList.remove("active"));
   const page = document.getElementById("page-" + id);
   if (page) { page.classList.add("active"); }
-  window.scrollTo({ top: 0, behavior: "auto" });
+  if (shouldScrollTop) window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function goBack() {
@@ -707,11 +707,11 @@ function handleHash() {
   const raw = window.location.hash.replace("#", "");
   if (!raw) return;
 
-  // Only switch profile if the hash is exactly the person id (e.g., #rafael)
-  if (PEOPLE.some(p => p.id === raw)) {
-    showPerson(raw);
+  const personId = raw.split("-")[0]; // rafael from rafael-education
+  if (PEOPLE.some(p => p.id === personId)) {
+    // Don't scroll to top; allow the browser to jump to the section anchor.
+    showPerson(personId, false);
   }
-  // If it's #rafael-education etc, let the browser scroll normally.
 }
 
 // ---- Init ----
