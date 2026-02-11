@@ -189,14 +189,37 @@ a { color: inherit; text-decoration: none; }
    section or add a new section object to the array.
    ================================================================== */
 const PEOPLE = [
-  {
-    id: "rafael",
-    name: "Rafael Lima Araujo Rego",
-    cardBlurb: "Econometrics & Operations Research",
-    tagline: "Double BSc in Econometrics & Operations Research and Economics",
-    info: "Nationalities: Brazilian, Italian | Lived in Rio de Janeiro and Munich; currently residing in Rotterdam",
+    {
+      id: "rafael",
+      name: "Rafael Lima Araujo Rego",
+      cardBlurb: "Econometrics & Operations Research",
+      tagline: "Double BSc in Econometrics & Operations Research and Economics",
+      info: "Nationalities: Brazilian, Italian | Lived in Rio de Janeiro and Munich; currently residing in Rotterdam",
+  
+      sections: [
+        {
+    id: "highlights",
+    title: "Highlights",
+    navLabel: "Highlights",
+    type: "cards",
+    cards: [
+      {
+        title: "Biggest Accomplishments",
+        subtitle: "",
+        meta: "",
+        bullets: [
+          "NIBC (SME supporting factor): Took an ambiguous EU Regulation interpretation problem with no internal playbook, mapped complex corporate structures to eligibility rules, identified 10+ qualifying exposures, and packaged the method into a checklist/manual and handover so the process scaled across the bank and stayed in place after my internship. Impact: reduced capital requirements by millions of euros (≈24% per qualifying exposure).",
+          "Research (co-author): Co-authored a paper under submission with professors at Erasmus. I originated the two-step method that makes misclassification probability depend on covariates, derived the math, adapted the EM-style estimator, implemented it in Python, and validated it on large churn datasets. This made it possible to better interpret and predict which observations in the dataset are incorrect and to interpret the variables correlated with this.",
+          "NIBC (valuation case): Rebuilt the valuation of a complex equity case end-to-end, wrote a decision-ready report for senior management, and removed the need for external consultants (saving thousands) using AI to scrape company data from Companies House Companies. I documented the approach so the team could reuse the logic for similar cases.",
+          "IMC Prosperity 3: Ranked 6th globally in student manual trading (1st in the Netherlands) out of 12,621 teams. I built and extended a Python backtesting workflow to iterate quickly on market-making and ETF-arbitrage ideas and used that loop to guide live decisions.",
+          "I did all of this in 6 months at the same time, plus another internship and keeping up with near summa cum laude grades.",
+          "Built a profitable sneaker resale business and instagram and whatsapp community when I was only 15, managed inventory, handled delivery and achieved average revenue $23,000 for two years."
+        ],
+        buttons: []
+      }
+    ]
+  },
 
-    sections: [
       {
         id: "education",
         title: "Education",
@@ -211,7 +234,8 @@ const PEOPLE = [
               "Cumulative GPA: 8.75/10 (cum laude threshold is 8.25/10)",
               "Second-year & Third-year GPA: 9.1/10 & 8.99/10 (summa cum laude threshold is 9/10)",
               "Honours Research Class: Invitation-only program for the best performing students across the Erasmus School of Economics faculty",
-              "Skills Acquired: Linear & Logistic Regressions, Probability Theory & Statistics, Multivariate Statistics, Finance, Accounting, Linear Algebra, Programming, Optimization Methods, Principal Component Analysis, Time Series Analysis, Stochastic Processes, Monte Carlo Simulations"
+              "Focus: Optimization, Stochastic modeling"
+              
             ],
             buttons: []
           },
@@ -221,7 +245,7 @@ const PEOPLE = [
             meta: "Delft, Netherlands | Sep 2025 \u2013 Jan 2026",
             bullets: [
               "Cumulative GPA (ML, NLP, and Python courses): 9.5/10",
-              "Skills Acquired: Machine Learning, Natural Language Processing, Deep Learning, Python"
+              "Focus: Machine Learning, Deep Learning, and more Python"
             ],
             buttons: []
           }
@@ -240,7 +264,8 @@ const PEOPLE = [
             meta: "Rotterdam, Netherlands | Part time | Sep 2025 \u2013 Present",
             bullets: [
               "Reproducing the collapsed dynamic factor model of Br\u00e4uning & Koopman (2014) in state-space form by developing a Kalman filter and Monte Carlo simulation framework in Python and validating the implementation against the original paper across multiple model specifications.",
-              "Working under Professor Dick van Dijk, Sam van Meer, and Daan Opschoor (Ortec Finance)."
+              "Working under Professor Dick van Dijk, Sam van Meer, and Daan Opschoor (Ortec Finance).",
+              "Basically predicting a lot of dependent time data, which is very random, and trying to make sense of it."
             ],
             buttons: []
           },
@@ -249,8 +274,8 @@ const PEOPLE = [
             subtitle: "NIBC Bank",
             meta: "The Hague, Netherlands | Part time | Feb 2025 \u2013 Aug 2025",
             bullets: [
-              "Lowered aggregate capital requirements by millions of euros (~24% per qualifying exposure) by leading a portfolio-wide review of corporate debt exposures to implement the SME supporting factor under EU CRR. Independently navigated complex regulatory rules and corporate structures, identifying 10+ qualifying exposures. Pitched and secured buy-in from Risk and Corporate Banking MDs and established the SME Factor check as a permanent feature of the credit review process, leading training sessions for teams across global offices.",
-              "Independently saved the bank thousands in consultant fees by restructuring the valuation of a complex equity case for an FX trading company. Produced and delivered a polished solution report to senior management, fully replacing the need for external consultants.",
+              "SME supporting factor rollout (EU CRR): Took an ambiguous regulatory problem with no internal playbook, independently mapped corporate structures to eligibility rules, identified 10+ qualifying exposures, secured buy-in from Risk and Corporate Banking MDs, and turned the approach into a checklist/manual and training so the process scaled and remained in place after my internship. Impact: reduced capital requirements by millions (≈24% per qualifying exposure).",
+              "NIBC (valuation case): Rebuilt the valuation of a complex equity case end-to-end, wrote a decision-ready report for senior management, and removed the need for external consultants (saving thousands) using AI to scrape company data from Companies House Companies. I documented the approach so the team could reuse the logic for similar cases.",
               "Supported periodic credit reviews for corporate clients in the fiber infrastructure and data center sectors by preparing financial analyses and assessing credit risk exposures within the bank\u2019s portfolio. Automated and standardized processes that spared the team 3+ hours per new deal."
             ],
             buttons: []
@@ -271,7 +296,8 @@ const PEOPLE = [
             meta: "Rotterdam, Netherlands | Part time (Honours Research Class; unpaid internship for credit) | Aug 2024 \u2013 Aug 2025",
             bullets: [
               "Co-authored a paper (under submission to the Journal of Computational Science) with Professors Philip Hans Franses, Richard Paap, and Casper Keer, where we developed a misclassification-robust prediction model also capable of predicting misclassified observations.",
-              "Originated and tested a two-step method that made the probability of misclassification dependent on explanatory variables, deriving the mathematics, adapting the EM-style estimator, and testing on large churn datasets in Python. This approach identified variable combinations disproportionately linked to misclassified cases and shaped the paper\u2019s final methodology by motivating the one-step LASSO extension."
+              "Originated and tested a two-step method that made the probability of misclassification dependent on explanatory variables, deriving the mathematics, adapting the EM-style estimator, and testing on large churn datasets in Python. This approach identified variable combinations disproportionately linked to misclassified cases and shaped the paper\u2019s final methodology by motivating the one-step LASSO extension.",
+              "This made it possible to better interpret and predict which observations in the dataset are incorrect and to interpret the variables correlated with this."
             ],
             buttons: []
           },
@@ -280,12 +306,24 @@ const PEOPLE = [
             subtitle: "Erasmus University Rotterdam",
             meta: "Rotterdam, Netherlands | Part time | Oct 2024 \u2013 Jan 2025 & Apr 2025 \u2013 Aug 2025",
             bullets: [
-              "Taught two Non-linear Optimization tutorials in the second block 2024/25, planning and leading sessions for over 30 students in each class. Topics included: Gradient Descent, Newton\u2019s Methods, and Non-differentiable/Constrained/Convex Optimization.",
-              "Taught one Statistics tutorial in the fifth block 2024/25, planning and leading a class of 25 students. Topics included: Fundamentals of Estimators (MLE & MME), Asymptotic Theory (CLT & LLN), Sufficient Statistics, and Optimal Hypothesis Testing.",
-              "Received excellent feedback from students for communicating complex theory in a clear and intuitive way."
+              "Taught two Non-linear Optimization tutorials in the second block 2024/25, planning and leading sessions for over 30 students in each class.",
+              "Taught one Statistics tutorial in the fifth block 2024/25, planning and leading a class of 25 students.",
+              "Received great feedback from students for communicating complex theory in a clear and intuitive way."
             ],
             buttons: []
-          }
+          },
+          {
+            title: "Sneaker Reselling (Solo Business)",
+            subtitle: "",
+            meta: "Rio de Janeiro | Oct 2019 – Sep 2021",
+            bullets: [
+              "Started with R$ 1,500 (~$340) and resold sneakers via WhatsApp and Instagram.",
+              "Served as a main co-supplier for a sneaker Instagram marketing page (peaked at 5,000+ followers (2018); ~3,000 today) and helped operate a WhatsApp resale group that is still active today.",
+              "Owned sourcing, pricing, authentication, and distribution; managed inventory and liquidity to keep cash flow high.",
+              "Achieved an average yearly revenue of R$ 101,208 (~$23,000) and yearly profit of R$ 14,148 (~$3,215)."
+            ],
+            buttons: []
+          },
         ]
       },
 
@@ -336,16 +374,6 @@ const PEOPLE = [
         showInNav: false,
         type: "cards",
         cards: [
-          {
-            title: "Sneaker Retail Solo Entrepreneurship",
-            subtitle: "",
-            meta: "Oct 2019 \u2013 Sep 2021",
-            bullets: [
-              "Resold sneakers via WhatsApp and Instagram; started with R$ 1,500 (~$340).",
-              "Achieved an average yearly revenue of R$ 101,208 (~$23,000) and yearly profit of R$ 14,148 (~$3,215)."
-            ],
-            buttons: []
-          },
           {
             title: "Volunteer Math Teacher",
             subtitle: "Casa Santa Ignez",
@@ -666,7 +694,6 @@ function showPerson(id) {
   document.querySelectorAll(".person-page").forEach(p => p.classList.remove("active"));
   const page = document.getElementById("page-" + id);
   if (page) { page.classList.add("active"); }
-  window.location.hash = id;
   window.scrollTo({ top: 0, behavior: "auto" });
 }
 
@@ -678,9 +705,14 @@ function goBack() {
 }
 
 function handleHash() {
-  const hash = window.location.hash.replace("#", "").split("-")[0];
-  const match = PEOPLE.find(p => p.id === hash);
-  if (match) showPerson(match.id);
+  const raw = window.location.hash.replace("#", "");
+  if (!raw) return;
+
+  // Only switch profile if the hash is exactly the person id (e.g., #rafael)
+  if (PEOPLE.some(p => p.id === raw)) {
+    showPerson(raw);
+  }
+  // If it's #rafael-education etc, let the browser scroll normally.
 }
 
 // ---- Init ----
