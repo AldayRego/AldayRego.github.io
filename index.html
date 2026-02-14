@@ -93,6 +93,7 @@ a { color: inherit; text-decoration: none; }
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .project-card:hover { border-color: #ccc; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+.card-link { display: block; color: inherit; text-decoration: none; }
 .project-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.35rem; }
 .project-card .card-subtitle { font-size: 0.95rem; color: #555; margin-bottom: 0.25rem; font-weight: 500; }
 .project-card .card-meta { font-size: 0.82rem; color: #999; margin-bottom: 1rem; letter-spacing: 0.01em; }
@@ -421,6 +422,30 @@ const PEOPLE = [
 
     sections: [
       {
+        id: "highlights",
+        title: "Highlights",
+        navLabel: "Highlights",
+        type: "cards",
+        cards: [
+          {
+            title: "",
+            subtitle: "",
+            meta: "",
+            bullets: [
+              "Internely (Founding Engineer): Building a platform that autonomously scans the Wall Street market to uncover hidden internships at boutique firms not posted on public job boards.",
+              "At Internely, developing an intelligent matching engine that maps student profiles to roles where they have the highest statistical chance of being hired, while leading a three-person team backed and funded by a senior professional at a global Private Equity mega-fund.",
+              "Led a corporate debt portfolio review at NIBC, securing reductions of millions of euros in capital requirements (around 24% per qualifying exposure).",
+              "At SkillMix, built a smart traffic-light project: from MVP to active negotiations with ERTICO (ITS Europe) and implemented DDQN-based self-learning optimization for live traffic adaptation.",
+              "IMC Prosperity 3: Ranked 6th globally in student manual trading (1st in the Netherlands) out of 12,621 teams.",
+              "Won 1st place at Turing Students Rotterdam\u2019s Datathon by building and deploying the most accurate ML predictive algorithm for Olympic medal outcomes.",
+              "Research Assistant at Erasmus School of Economics (Prof. Annika Camehl), contributing to macro-micro modelling research through replication, simulation, and likelihood-based estimation in MATLAB."
+            ],
+            buttons: []
+          }
+        ]
+      },
+
+      {
         id: "education",
         title: "Education",
         navLabel: "Education",
@@ -432,7 +457,7 @@ const PEOPLE = [
             meta: "Rotterdam, Netherlands | Class of 2026",
             bullets: [
               "Cumulative GPA: 8.32/10 \u2014 Cum Laude (honours) (1st year = 7.79, 2nd year = 8.39, 3rd year = 8.64)",
-              "FAECTOR Excellence Programme: Programme for top \u201cacademically high-performing students in Econometrics\u201d centred on exploring how to apply econometrics on to geopolitics."
+              "FAECTOR Excellence Programme: Programme for top \u201cacademically high-performing students in Econometrics\u201d centred on applying econometrics to geopolitics."
             ],
             buttons: []
           }
@@ -441,10 +466,21 @@ const PEOPLE = [
 
       {
         id: "experience",
-        title: "Work Experience",
+        title: "Relevant Work Experience",
         navLabel: "Experience",
         type: "cards",
         cards: [
+          {
+            title: "Founding Engineer",
+            subtitle: "Internely",
+            meta: "",
+            bullets: [
+              "Building a platform that autonomously scans the Wall Street market to uncover hidden internships at boutique firms that are never posted on public job boards.",
+              "Developing a recommendation engine that automatically maps student profiles to specific roles where they have the highest statistical chance of being hired.",
+              "Leading a three-person team with funding and advisory from a senior professional at a global Private Equity mega-fund (formerly Bulge Bracket IB)."
+            ],
+            buttons: []
+          },
           {
             title: "Working Student Analyst \u2014 Digital Infrastructure Team",
             subtitle: "NIBC Bank N.V. (transitioning to ABN AMRO)",
@@ -470,10 +506,11 @@ const PEOPLE = [
             subtitle: "SkillMix",
             meta: "Rotterdam, Netherlands | Part-time | April 2025 \u2013",
             bullets: [
-              "Developing a smart traffic-light prototype that uses dynamic signal-timing optimization.",
-              "First prototype completed and currently in discussions with ERTICO, who are actively searching for a consortium for us to join.",
-              "Applying reinforcement learning (DDQN) alongside more standard linear-optimization algorithms (benchmark) for real-time timing adjustments."
+              "Developing a smart traffic-light system that uses dynamic signal-timing optimization.",
+              "Successfully advanced the project from initial MVP to active negotiations with ERTICO (ITS Europe) to integrate the technology into a major European smart-city consortium.",
+              "Implementing Deep Reinforcement Learning (DDQN) to build self-learning models that outperform traditional linear benchmarks, enabling adaptation to live traffic patterns without manual updates."
             ],
+            url: "skillmix-resources.html",
             buttons: []
           },
           {
@@ -490,48 +527,18 @@ const PEOPLE = [
       },
 
       {
-        id: "projects",
-        title: "Data Analytics & Finance Projects",
-        navLabel: "Projects",
-        type: "cards",
-        cards: [
-          {
-            title: "Using Machine Learning to Adjust Mammography Time Intervals for Breast Cancer Screening",
-            subtitle: "Medicine Research Paper \u2014 UAM Faculty of Medicine",
-            meta: "May \u2013 June 2024",
-            bullets: [
-              "Collaborated with a 6th-year medicine student to develop the research paper contributing in the machine learning aspect of the project.",
-              "Presented at the congress \u201cCongreso SESPM\u201d."
-            ],
-            buttons: [
-              // { label: "Paper", url: "#" },
-              // { label: "Congress Poster", url: "#" },
-            ]
-          },
-          {
-            title: "Options Pricing Research Project (In progress)",
-            subtitle: "Assessing the Accuracy Gains of the Heston Model Over the Black-Scholes Merton Model in Pricing European Call Options: A Comparative Study on Utility and Technology Stocks",
-            meta: "September 2024 \u2013",
-            bullets: [],
-            buttons: [
-              // { label: "Paper (in progress)", url: "#" },
-            ]
-          }
-        ]
-      },
-
-      {
         id: "competitions",
         title: "Competitions & Awards",
         navLabel: "Awards",
         type: "cards",
         cards: [
           {
-            title: "IMC Prosperity 2025 \u2014 Algorithmic Trading Competition",
-            subtitle: "6th Best Student Manual Traders Worldwide (1st in the Netherlands)",
+            title: "IMC Prosperity 3 \u2014 Algorithmic Trading Competition",
+            subtitle: "6th Best Student Manual Trader in the World",
             meta: "",
             bullets: [
-              "Top 1.3% in the overall competition out of 12,621 teams."
+              "Ranked 6th globally in the student manual trading category and 1st in the Netherlands out of 12,621 teams. Placed in the top 1.3% overall (manual and algorithmic combined) in our first year competing.",
+              "Developed and back-tested strategies for market-making and ETF arbitrage. Extended Python backtester with parameter optimization. In manual trading, modeled and solved market optimization problems using game-theoretic predictions of competitor behavior and auction theory to estimate optimal trading strategies."
             ],
             buttons: []
           },
@@ -540,7 +547,48 @@ const PEOPLE = [
             subtitle: "1st Place",
             meta: "",
             bullets: [
-              "Our challenge? To develop and deploy the most effective ML system using a comprehensive Olympics dataset."
+              "Won 1st place by developing and deploying the most accurate ML predictive algorithm for Olympic medal outcomes, after a day of building data pipelines, testing models, and delivering a final presentation."
+            ],
+            buttons: []
+          }
+        ]
+      },
+
+      {
+        id: "skills",
+        title: "Languages & Computer Skills",
+        navLabel: "Skills",
+        type: "skills",
+        skillGroups: [
+          { label: "Languages", items: ["Spanish (Native)", "English (Fluent)"] },
+          { label: "Programming", items: ["Python (Proficient)", "MATLAB (Proficient)", "R (Intermediate)", "Excel (Intermediate)"] },
+          { label: "Methods", items: ["Econometrics", "Machine Learning", "Reinforcement Learning (DDQN)", "Credit Risk Analysis", "Structural VARs"] }
+        ]
+      },
+
+      {
+        id: "extracurricular",
+        title: "Extracurricular",
+        navLabel: "Extra",
+        showInNav: false,
+        type: "cards",
+        cards: [
+          {
+            title: "Using Machine Learning to Adjust Mammography Time Intervals for Breast Cancer Screening",
+            subtitle: "Medicine Research Paper \u2014 UAM Faculty of Medicine",
+            meta: "May \u2013 June 2024",
+            bullets: [
+              "Collaborated with a 6th-year medicine student to develop the research paper, contributing on the machine learning side of the project.",
+              "Presented at the congress \u201cCongreso SESPM\u201d."
+            ],
+            buttons: []
+          },
+          {
+            title: "Options Pricing Research Project (In progress)",
+            subtitle: "Assessing the Accuracy Gains of the Heston Model Over the Black-Scholes Merton Model in Pricing European Call Options",
+            meta: "September 2024 \u2013 Present",
+            bullets: [
+              "Comparative study focused on utility and technology stocks."
             ],
             buttons: []
           }
@@ -562,7 +610,7 @@ const PEOPLE = [
 function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
 
 function renderCard(card) {
-  return `
+  const cardHtml = `
     <div class="project-card">
       <h3>${esc(card.title)}</h3>
       ${card.subtitle ? `<p class="card-subtitle">${esc(card.subtitle)}</p>` : ""}
@@ -573,6 +621,12 @@ function renderCard(card) {
       ).join("")}</div>` : ""}
     </div>
   `;
+
+  if (card.url) {
+    return `<a class="card-link" href="${esc(card.url)}">${cardHtml}</a>`;
+  }
+
+  return cardHtml;
 }
 
 function renderSection(p, s) {
